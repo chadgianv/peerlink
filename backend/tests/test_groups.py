@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from app import requests_store,group_store
-from app.main import GroupJoinRequest,GroupJoinDecision,join_group,decide_group,group_inbox,demo_groups
+from app.main import GroupJoinRequest,GroupJoinDecision,MatchRequest,join_group,decide_group,group_inbox,demo_groups,groups
 from fastapi import HTTPException
 
 class GroupTests(unittest.TestCase):
@@ -25,6 +25,14 @@ class GroupTests(unittest.TestCase):
         group=next(g for g in demo_groups()["groups"] if g["id"]=="g1")
         self.assertEqual(group["members"],4)
         self.assertEqual(group["available_seats"],1)
+
+    def test_recommendation_flags_membership(self):
+        query=MatchRequest(subject="Mathematics",topic="Quadratic Equations",preferred_slot="Wednesday 3 PM",account_id="alex")
+        self.assertEqual(next(g for g in groups(query)["matches"] if g["id"]=="g1")["membership_status"],"")
+        pending=join_group(GroupJoinRequest(account_id="alex",group_id="g1"))
+        self.assertEqual(next(g for g in groups(query)["matches"] if g["id"]=="g1")["membership_status"],"pending")
+        decide_group(pending["id"],GroupJoinDecision(account_id="joshua",status="accepted"))
+        self.assertEqual(next(g for g in groups(query)["matches"] if g["id"]=="g1")["membership_status"],"accepted")
 
     def test_duplicate_full_and_unauthorized(self):
         pending=join_group(GroupJoinRequest(account_id="alex",group_id="g1"))
