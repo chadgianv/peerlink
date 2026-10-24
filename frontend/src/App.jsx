@@ -12,7 +12,7 @@ async function request(path, body, signal) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const details = typeof data.detail === "string" ? data.detail : "Please check your selections.";
+    const details = response.status >= 500 ? "Python API unavailable (HTTP " + response.status + "). Verify FastAPI on port 8000." : (typeof data.detail === "string" ? data.detail : "Please check your selections (HTTP " + response.status + ").");
     throw new Error(details);
   }
   return data;
