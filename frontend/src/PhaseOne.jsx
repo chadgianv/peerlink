@@ -1,1 +1,1 @@
-export const phaseOne = true;
+export const phaseOne = 'ready';
