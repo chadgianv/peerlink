@@ -32,6 +32,7 @@ export default function App({account, onSignOut}) {
   const [error,setError] = useState("");
   const [confirmation,setConfirmation] = useState("");
   const [requests,setRequests] = useState([]);
+  const [groupRequests,setGroupRequests] = useState([]);
   const [requestError,setRequestError] = useState("");
   const [busyRequest,setBusyRequest] = useState(false);
   const activeRequest = useRef(null);
@@ -48,7 +49,8 @@ export default function App({account, onSignOut}) {
     try {const res=await request("/api/requests?account_id="+encodeURIComponent(account.id),null);setRequests(res.requests);setRequestError("");}
     catch(e){setRequestError("Could not load demo requests. Ensure FastAPI is running. "+e.message);}
   }
-  useEffect(()=>{loadRequests();},[account.id]);
+  async function loadGroupRequests(){try{const data=await request("/api/group-requests?account_id="+encodeURIComponent(account.id),null);setGroupRequests(data.requests);}catch(e){setRequestError("Could not load group requests: "+e.message);}}
+  useEffect(()=>{loadRequests();loadGroupRequests();},[account.id]);
   function reset() {
     if (activeRequest.current) activeRequest.current.abort();
     setMatches([]);setSearched(false);setLoading(false);setError("");setConfirmation("");
@@ -87,6 +89,17 @@ export default function App({account, onSignOut}) {
     catch(e){setRequestError("Could not respond: "+e.message);}
     finally{setBusyRequest(false);}
   }
+  async function sendGroupRequest(item) {
+    setBusyRequest(true);setRequestError("");
+    try {const result=await request("/api/group-requests",{account_id:account.id,group_id:item.id});setConfirmation("Group join request #"+result.id+" is pending. Sign in as @"+item.host_id+" to review.");await loadGroupRequests();}
+    catch(e){setRequestError("Could not request group membership: "+e.message);}
+    finally{setBusyRequest(false);}
+  }
+  async function decideGroup(item,status){setBusyRequest(true);setRequestError("");try{
+    const res=await fetch(API+"/api/group-requests/"+item.id,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({account_id:account.id,status})});
+    if(!res.ok)throw new Error("HTTP "+res.status+" — capacity or request state changed");
+    setConfirmation("Group request #"+item.id+" "+status+".");await loadGroupRequests();
+  }catch(e){setRequestError(e.message);}finally{setBusyRequest(false);}}
   function simulate(item) {
     setConfirmation(mode === "tutor" ?
       "SIMULATED tutoring request for " + item.name + ". No appointment was created and no student was notified." :
@@ -133,10 +146,10 @@ export default function App({account, onSignOut}) {
               {index===0 && <span className="topmatch">Top match</span>}
               <p className="match-meta">{mode==="tutor"?"Topics: "+item.topics.join(", ")+" · Times: "+item.slots.join(", "):"Topic: "+item.topic+" · Time: "+item.slot+" · Members: "+item.members+"/"+item.capacity}</p>
               <div className="reasons">{item.reasons.map((reason,i)=><span key={i}>{reason}</span>)}</div>
-              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):simulate(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id)}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):"Join group (demo)"}</button>
+              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):sendGroupRequest(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id) || (mode==="group" && item.host_id===account.id)}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):(item.host_id===account.id?"Your study group":"Request to join group")}</button>
             </article>)}
           </div>}
-          <p className="disclaimer">Rankings are rule-based. Tutoring requests are saved locally and can be accepted by any listed tutor account; study-group joins remain simulated. Demo identities are not authenticated.</p>
+          <p className="disclaimer">Rankings are rule-based. Tutoring requests are saved locally and can be accepted by any listed tutor account; study-group join requests are saved locally and reviewed by demo group hosts. Demo identities are not authenticated.</p>
         </section>
       </div>
       <section className="panel requests-panel" aria-live="polite">
@@ -150,6 +163,17 @@ export default function App({account, onSignOut}) {
             {({t1:"joshua",t2:"angela",t3:"mark",t4:"sofia",t5:"patricia",t6:"daniel",t7:"lea",t8:"carlo",t9:"isabella"})[item.tutor_id]===account.id && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"accepted")}>Accept request</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"declined")}>Decline request</button></div>}
           </article>)}</div>}
         <p className="disclaimer">Accepted requests display a demo session confirmation with the agreed schedule. Requests are saved in local SQLite; no notifications, meeting links or real calendar bookings are created.</p>
+      </section>
+      <section className="panel requests-panel" aria-live="polite">
+        <div className="requests-header"><div><p className="eyebrow">STEP 04 · STUDY GROUPS</p><h2>My group memberships & join requests</h2></div><button type="button" className="request-button" onClick={loadGroupRequests}>Refresh group requests</button></div>
+        {groupRequests.length===0?<p className="result-count">No group requests yet. Search a study group, request to join, and switch to its host account to approve.</p>:
+          <div className="match-list">{groupRequests.map(item=><article className="match-card" key={item.id}>
+            <div className="match-heading"><div><b>{item.group_name}</b><small>Request #{item.id} · From @{item.learner_id} · Host @{item.host_id}</small></div><strong className="score">{item.status}</strong></div>
+            {item.status==="accepted" && <div className="accepted-session"><strong>Membership confirmed in PEERLINK demo</strong><p>You are part of this fictional study group. See its listed topic and schedule in Study Group Finder. No group chat or meeting was automatically created.</p></div>}
+            {item.status==="declined" && <div className="notice error">Membership request declined. Search for another group.</div>}
+            {item.host_id===account.id && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideGroup(item,"accepted")}>Approve member</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideGroup(item,"declined")}>Decline</button></div>}
+          </article>)}</div>}
+        <p className="disclaimer">A demo-only locally saved membership workflow. No account authentication, messaging or real school groups.</p>
       </section>
     </main><footer>PEERLINK Lite · React + Python FastAPI · Seminar prototype</footer>
   </div>;
