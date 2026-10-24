@@ -126,3 +126,7 @@ A new, explicitly requested local SQLite demonstration adds **pending → accept
 
 ### Revised tutor-request demonstration
 All **nine eligible recommended fictional tutors** have login personas and can accept or decline learner requests. Accepted requests display session details (topic, recurring time slot, ID) in both accounts; this is local workflow state, not a real scheduled calendar booking. The original 180-minute plan is unchanged; this is later owner-requested additional scope.
+
+## Availability-first matching revision (owner-requested; after original roadmap)
+
+For tutor matches, subject eligibility is required; if a learner specifies a time slot, tutors who do not offer it are excluded. Scoring is now **50 points for shared availability**, **30 for subject eligibility**, **15 for topic fit**, and **5 for same grade**. When no time is selected, available time is treated as unconstrained for exploratory search; a request still requires an actual tutor-offered time. Study groups likewise require a shared selected time, scored **50 time / 35 topic / 15 open-seat availability**. This overrides the original weighting tables above and is additional scope outside the original timebox.
