@@ -101,3 +101,7 @@ After the group host approves a join request, the accepted member can click **Vi
 ## Final seminar preparation (Phase 5 review branch)
 
 See [final slide-by-slide outline](docs/PRESENTATION.md), [timed demo / speaker script](docs/PRESENTER_SCRIPT.md), and [acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md). The Phase 5 delivery is documentation for a seminar demonstration, **not** an exported PowerPoint deck or verified live demo. Backend tests, frontend build, and browser/mobile checks still require execution on a running local project.
+
+## Flexible tutor requests — Any time
+
+If the learner selects **Any time**, they may send a tutoring request to any eligible recommended tutor without choosing a specific schedule. The request is stored with a blank slot, meaning **schedule to be arranged**, not a confirmed appointment. If the tutor accepts, both see accepted status but must agree on an actual time outside the prototype. Selecting a specific slot still requires the tutor to offer that slot. Study-group times remain fixed.
