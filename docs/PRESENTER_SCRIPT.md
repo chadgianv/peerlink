@@ -41,3 +41,6 @@ If API testing fails, show screenshots of verified states only; do not claim a s
 
 ### After request acceptance
 Show the accepted card to both tutor and learner: session reference, matched topic, agreed time slot, and reminder to coordinate meeting location separately. Every eligible recommended tutor now has a matching account; switch to the appropriate username rather than only Joshua.
+
+## Availability-first demonstration
+Select Friday 2 PM and Mathematics: only tutors available then should appear. Switch to Wednesday 3 PM to demonstrate changing results. Explain that time contributes 50/100 scoring points and that a mismatch is filtered out rather than recommended. Choose Any time only to explore potential candidates; choose an actual overlapping time before submitting a request.
