@@ -21,8 +21,8 @@ export default function App({account, onSignOut}) {
   const [mode,setMode] = useState("tutor");
   const [name,setName] = useState(account.name);
   const [grade,setGrade] = useState(String(account.grade));
-  const [subject,setSubject] = useState("Mathematics");
-  const [topic,setTopic] = useState("Quadratic Equations");
+  const [subject,setSubject] = useState(account.focus);
+  const [topic,setTopic] = useState(FALLBACK_SUBJECTS[account.focus][0]);
   const [time,setTime] = useState("Wednesday 3 PM");
   const [subjects,setSubjects] = useState(FALLBACK_SUBJECTS);
   const [slots,setSlots] = useState(FALLBACK_SLOTS);
