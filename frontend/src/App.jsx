@@ -33,6 +33,8 @@ export default function App({account, onSignOut}) {
   const [confirmation,setConfirmation] = useState("");
   const [requests,setRequests] = useState([]);
   const [groupRequests,setGroupRequests] = useState([]);
+  const [memberDirectory,setMemberDirectory] = useState(null);
+  const [directoryLoading,setDirectoryLoading] = useState(false);
   const [requestError,setRequestError] = useState("");
   const [busyRequest,setBusyRequest] = useState(false);
   const activeRequest = useRef(null);
@@ -51,6 +53,12 @@ export default function App({account, onSignOut}) {
   }
   async function loadGroupRequests(){try{const data=await request("/api/group-requests?account_id="+encodeURIComponent(account.id),null);setGroupRequests(data.requests);}catch(e){setRequestError("Could not load group requests: "+e.message);}}
   useEffect(()=>{loadRequests();loadGroupRequests();},[account.id]);
+  async function viewGroupMembers(groupId){
+    setDirectoryLoading(true);setRequestError("");
+    try{const data=await request("/api/groups/"+encodeURIComponent(groupId)+"/members?account_id="+encodeURIComponent(account.id),null);setMemberDirectory(data);}
+    catch(e){setMemberDirectory(null);setRequestError("Cannot view members: "+e.message);}
+    finally{setDirectoryLoading(false);}
+  }
   function reset() {
     if (activeRequest.current) activeRequest.current.abort();
     setMatches([]);setSearched(false);setLoading(false);setError("");setConfirmation("");
@@ -148,6 +156,7 @@ export default function App({account, onSignOut}) {
               <div className="reasons">{item.reasons.map((reason,i)=><span key={i}>{reason}</span>)}</div>
               {mode==="group" && item.membership_status==="accepted" && <span className="topmatch" role="status">✓ Already a member</span>}
               {mode==="group" && item.membership_status==="pending" && <span className="topmatch" role="status">Join request pending</span>}
+              {mode==="group" && (item.membership_status==="accepted" || item.host_id===account.id) && <button type="button" className="request-button" disabled={directoryLoading} onClick={()=>viewGroupMembers(item.id)}>View members</button>}
               <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):sendGroupRequest(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id) || (mode==="group" && (item.host_id===account.id || item.membership_status==="accepted" || item.membership_status==="pending"))}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):(item.host_id===account.id?"Your study group":item.membership_status==="accepted"?"Already a member":item.membership_status==="pending"?"Request pending":"Request to join group")}</button>
             </article>)}
           </div>}
@@ -171,10 +180,11 @@ export default function App({account, onSignOut}) {
         {groupRequests.length===0?<p className="result-count">No group requests yet. Search a study group, request to join, and switch to its host account to approve.</p>:
           <div className="match-list">{groupRequests.map(item=><article className="match-card" key={item.id}>
             <div className="match-heading"><div><b>{item.group_name}</b><small>Request #{item.id} · From @{item.learner_id} · Host @{item.host_id}</small></div><strong className="score">{item.status}</strong></div>
-            {item.status==="accepted" && <div className="accepted-session"><strong>Membership confirmed in PEERLINK demo</strong><p>You are part of this fictional study group. See its listed topic and schedule in Study Group Finder. No group chat or meeting was automatically created.</p></div>}
+            {item.status==="accepted" && <div className="accepted-session"><strong>Membership confirmed in PEERLINK demo</strong><p>You are part of this fictional study group. See its listed topic and schedule in Study Group Finder. No group chat or meeting was automatically created.</p>{item.learner_id===account.id && <button type="button" className="request-button" disabled={directoryLoading} onClick={()=>viewGroupMembers(item.group_id)}>View group members</button>}</div>}
             {item.status==="declined" && <div className="notice error">Membership request declined. Search for another group.</div>}
             {item.host_id===account.id && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideGroup(item,"accepted")}>Approve member</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideGroup(item,"declined")}>Decline</button></div>}
           </article>)}</div>}
+        {memberDirectory && <div className="member-directory" role="region" aria-label="Study group members"><div className="requests-header"><div><p className="eyebrow">GROUP DIRECTORY</p><h3>{memberDirectory.group_name}</h3></div><button type="button" className="request-button" onClick={()=>setMemberDirectory(null)}>Close</button></div><p className="match-meta">{memberDirectory.subject} · {memberDirectory.topic} · {memberDirectory.slot}</p><ul className="member-list">{memberDirectory.members.map(person=><li key={person.account_id}><strong>{person.name}</strong><span>@{person.account_id} · {person.role}</span></li>)}</ul>{memberDirectory.unnamed_seed_members>0 && <p className="match-meta">This demo includes {memberDirectory.unnamed_seed_members} prefilled member slots with no named accounts. Only the host and approved joiners have profiles to display.</p>}<p className="disclaimer">Use the displayed fictional usernames to coordinate your seminar demonstration by switching accounts. PEERLINK does not provide chat or contact details.</p></div>}
         <p className="disclaimer">A demo-only locally saved membership workflow. No account authentication, messaging or real school groups.</p>
       </section>
     </main><footer>PEERLINK Lite · React + Python FastAPI · Seminar prototype</footer>
