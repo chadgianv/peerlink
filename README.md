@@ -73,3 +73,9 @@ These checks require local execution; their results must not be reported as pass
 - [Acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md)
 
 All sample tutor and group information is fictional. The matching scores are rule-based, **not AI accuracy** or evidence of verified teaching proficiency.
+
+## Functional local tutoring workflow (owner-requested extension, PR under review)
+
+Sign in as **Alex Rivera**, search Mathematics / Quadratic Equations / Wednesday 3 PM, and click **Send tutoring request** on **Joshua Reyes**. FastAPI writes a *pending* request to the local SQLite file `backend/peerlink_demo.sqlite3` (ignored by Git). Sign out and use the additional **Joshua Reyes** demo account (`joshua`, optional demo password), view **incoming requests**, and choose **Accept** or **Decline**. Sign back in as Alex and click **Refresh requests** to see the final status. Six demo accounts now exist: the original five students plus Joshua as a tutor.
+
+Only Joshua is mapped to a recipient demo account for this working two-sided showcase; other tutor profiles remain matching-only. Study-group joining remains simulated. Status survives browser refresh and account switching while the same backend/database is used; it does not send notifications, create actual appointments or protect identity. The demo account ID is supplied by the browser and **can be impersonated**; this must never be exposed publicly or used with real personal records. For a fresh seminar scenario, stop FastAPI and delete `backend/peerlink_demo.sqlite3` before restarting.
