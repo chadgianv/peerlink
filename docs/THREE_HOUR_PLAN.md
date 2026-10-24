@@ -130,3 +130,7 @@ All **nine eligible recommended fictional tutors** have login personas and can a
 ## Availability-first matching revision (owner-requested; after original roadmap)
 
 For tutor matches, subject eligibility is required; if a learner specifies a time slot, tutors who do not offer it are excluded. Scoring is now **50 points for shared availability**, **30 for subject eligibility**, **15 for topic fit**, and **5 for same grade**. When no time is selected, available time is treated as unconstrained for exploratory search; a request still requires an actual tutor-offered time. Study groups likewise require a shared selected time, scored **50 time / 35 topic / 15 open-seat availability**. This overrides the original weighting tables above and is additional scope outside the original timebox.
+
+## Owner-requested functional Study Group Finder extension
+
+The group finder now proposes a local SQLite request workflow: pending group join → host accepts/declines → accepted demo membership and updated group capacity. Selected schedules remain mandatory. Every joinable group has a host account, while the full demo group cannot receive join requests. This is additional scope beyond the original 180 minutes; there are still no real students, messages, or secure authentication.
