@@ -114,3 +114,10 @@
 - [ ] Tutor may accept, and the schedule remains to be arranged.
 - [ ] Specific unavailable slots remain rejected.
 - [ ] Backend tests, frontend build and browser checks run and recorded.
+
+## PEERLINK system branding
+- [ ] Login prominently displays full PEERLINK logo, without placeholder P.
+- [ ] Signed-in header displays consistent logo across desktop and mobile.
+- [ ] Browser tab/favicon uses PEERLINK icon.
+- [ ] Logo remains legible on narrow screens and SVGs render without broken-image errors.
+- [ ] Frontend Vite build and mobile/browser smoke checks executed and documented.

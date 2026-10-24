@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+<title id="title">PEERLINK - students connected through learning</title>
+<defs><linearGradient id="connect" x1="0" x2="1"><stop stop-color="#18B4F1"/><stop offset=".5" stop-color="#1473E6"/><stop offset="1" stop-color="#20C69F"/></linearGradient><linearGradient id="pages" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1455C6"/><stop offset="1" stop-color="#073479"/></linearGradient></defs>
+<circle cx="64" cy="24" r="12" fill="#0864D5"/><circle cx="30" cy="43" r="11" fill="#20AEEA"/><circle cx="98" cy="43" r="11" fill="#19C596"/>
+<path d="M43 48c0-12 9-20 21-20s21 8 21 20v12H43Z" fill="#0C61C7"/>
+<path d="M8 77c2-16 11-24 23-24 10 0 16 6 24 14l9 8c5 5 10 5 15 0l10-10c8-9 14-12 21-12 12 0 20 9 20 25" fill="none" stroke="url(#connect)" stroke-width="15" stroke-linecap="round"/>
+<path d="M64 101c-17-10-33-13-53-10v17c22-3 39 1 53 12 14-11 31-15 53-12V91c-20-3-36 0-53 10Z" fill="url(#pages)"/>
+<path d="M64 101v18M12 94c21-2 39 3 52 12 13-9 31-14 52-12" fill="none" stroke="#43AEF4" stroke-width="3" stroke-linecap="round"/>
+</svg>

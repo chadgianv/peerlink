@@ -105,3 +105,7 @@ See [final slide-by-slide outline](docs/PRESENTATION.md), [timed demo / speaker 
 ## Flexible tutor requests — Any time
 
 If the learner selects **Any time**, they may send a tutoring request to any eligible recommended tutor without choosing a specific schedule. The request is stored with a blank slot, meaning **schedule to be arranged**, not a confirmed appointment. If the tutor accepts, both see accepted status but must agree on an actual time outside the prototype. Selecting a specific slot still requires the tutor to offer that slot. Study-group times remain fixed.
+
+## PEERLINK visual identity (branding PR)
+
+The PEERLINK branding uses reusable, transparent SVG artwork: `/peerlink-logo.svg` (full wordmark and connected students/book mark) and `/peerlink-icon.svg` (icon). The login screen and application header use the logo; the browser favicon uses the icon. These lightweight SVG assets are an editable vector adaptation of the approved AI-generated PEERLINK concept, optimized for responsive app interfaces. No external image hosting required. Branding does not alter matching, requests, or account workflows.
