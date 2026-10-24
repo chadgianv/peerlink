@@ -19,3 +19,20 @@
 .notice.success{background:#eaf9f0;border:1px solid #a7e0c2;color:#19684b}
 button:focus-visible{outline:3px solid #7cc4f6;outline-offset:2px}
 button:disabled{opacity:.65;cursor:wait}
+
+/* Demo-only account switcher */
+.login-shell{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 10% 10%,#ddecff,transparent 38%),#f5f9fd}
+.login-card{width:min(100%,480px);padding:34px;background:#fff;border:1px solid #dce7f1;border-radius:20px;box-shadow:0 22px 65px #143e6518}
+.login-mark{width:52px;height:52px;border-radius:14px;background:#2866bd;color:#fff;font-size:30px;font-weight:900;display:grid;place-items:center}
+.login-card h1{font-size:clamp(29px,5vw,40px);letter-spacing:-1.5px;line-height:1.14;margin:8px 0 12px}
+.login-intro{color:#607f96;line-height:1.6}
+.login-form{margin-top:24px}
+.show-password{display:flex;align-items:center;gap:8px;font-weight:500;margin-bottom:20px;color:#496b85}
+.show-password input{width:18px;min-height:18px;height:18px;margin:0}
+.demo-credentials{font-size:13px;background:#eff7ff;border:1px solid #d4e9fa;border-radius:10px;padding:12px;margin-top:20px;color:#284f70;overflow-wrap:anywhere}
+.login-warning{font-size:12px;line-height:1.5;color:#70879b;margin-bottom:0}
+.account-chip{margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:#426682}
+.signout{background:#fff;border:1px solid #bfd4e5;border-radius:10px;color:#205c97;padding:9px 13px;font-size:12px;font-weight:700}
+.signout:hover{background:#ebf6ff}
+input[readonly],select:disabled{background:#f1f5f8;color:#526d82;cursor:not-allowed}
+@media(max-width:560px){.account-chip{width:100%;margin:10px 0 0;justify-content:space-between}.topbar{flex-wrap:wrap}.login-card{padding:22px}}

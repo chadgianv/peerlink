@@ -31,3 +31,14 @@
 - [ ] Presentation and script accurately describe simulated vs functional behavior.
 - [ ] Both finder modes can be demonstrated.
 - [ ] Fictional data is used exclusively.
+ 
+## Five-account demo login add-on (awaiting owner approval)
+- [ ] Login displays five fictional accounts, and their usernames are documented.
+- [ ] Account can enter with the password field blank (one-click demo access).
+- [ ] Shared example password `peerlink-demo` is clearly visible and accepted; no password security is implied.
+- [ ] Profile name, grade and default subject reflect the selected account.
+- [ ] Sign out returns to the login screen; refresh resets the session.
+- [ ] Tutor/group search still works for different dummy accounts.
+- [ ] Mobile layout does not overflow.
+- [ ] Frontend production build and browser checks are executed and results recorded.
+- [ ] Documentation warns that demo credentials do **not** provide real access control.

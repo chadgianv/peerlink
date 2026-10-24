@@ -12,3 +12,7 @@
 10. **Conclusion:** Students can discover potential learning partners with a transparent recommendation process.
 
 **Phase 4 review state:** Local dev proxy and stale health-test correction have been committed; browser/mobile tests still require evidence. Both local servers must run.\n\n**Phase 3 implementation state:** React now calls the Phase 2 matching APIs. Request buttons deliberately create **only a local simulated confirmation**. Runtime demonstration remains subject to local verification.
+ 
+## Requested additional demo-account segment (not in original time budget)
+
+Show the client-side sign-in selector with five fictional profiles and optional password (example: `peerlink-demo`); enter as Alex, demonstrate tutor matching, sign out, then log in as Mia and show a different profile and initial subject. State clearly that **demo credentials are public and provide no real authentication or data protection**. This feature is an added seminar demonstration, not a production identity system.

@@ -17,12 +17,12 @@ async function request(path, body, signal) {
   }
   return data;
 }
-export default function App() {
+export default function App({account, onSignOut}) {
   const [mode,setMode] = useState("tutor");
-  const [name,setName] = useState("Alex Rivera");
-  const [grade,setGrade] = useState("11");
-  const [subject,setSubject] = useState("Mathematics");
-  const [topic,setTopic] = useState("Quadratic Equations");
+  const [name,setName] = useState(account.name);
+  const [grade,setGrade] = useState(String(account.grade));
+  const [subject,setSubject] = useState(account.focus);
+  const [topic,setTopic] = useState(FALLBACK_SUBJECTS[account.focus][0]);
   const [time,setTime] = useState("Wednesday 3 PM");
   const [subjects,setSubjects] = useState(FALLBACK_SUBJECTS);
   const [slots,setSlots] = useState(FALLBACK_SLOTS);
@@ -71,7 +71,7 @@ export default function App() {
   }
 
   return <div className="app">
-    <header className="topbar"><div className="logo">P</div><div><b>PEERLINK Lite</b><small>Learn better, together</small></div><span className="badge">PEERLINK · DEMO</span></header>
+    <header className="topbar"><div className="logo">P</div><div><b>PEERLINK Lite</b><small>Learn better, together</small></div><div className="account-chip"><span>{account.name} · Grade {account.grade}</span><button type="button" className="signout" onClick={()=>{reset();onSignOut();}}>Sign out</button></div></header>
     <main className="page">
       <section className="hero"><p className="eyebrow">STUDENT-TO-STUDENT LEARNING</p><h1>Find your people.<br/><em>Learn your way.</em></h1><p>Discover a peer tutor or a study group matched to your topic and schedule. All student profiles are fictional.</p></section>
       <div className="columns">
@@ -84,16 +84,16 @@ export default function App() {
               </button>)}
           </div>
           <form onSubmit={search}>
-            <label htmlFor="name">Learner name (fictional)</label><input id="name" required minLength={2} maxLength={60} value={name} onChange={e=>{setName(e.target.value);reset();}}/>
+            <label htmlFor="name">Demo account name</label><input id="name" readOnly required minLength={2} maxLength={60} value={name}/>
             <div className="formrow">
-              <div><label htmlFor="grade">Grade</label><select id="grade" value={grade} onChange={e=>{setGrade(e.target.value);reset();}}><option value="11">11</option><option value="12">12</option></select></div>
+              <div><label htmlFor="grade">Grade</label><select id="grade" value={grade} disabled><option value="11">11</option><option value="12">12</option></select></div>
               <div><label htmlFor="subject">Subject</label><select id="subject" value={subject} onChange={e=>changeSubject(e.target.value)}>{Object.keys(subjects).map(s=><option key={s} value={s}>{s}</option>)}</select></div>
             </div>
             <label htmlFor="topic">Specific topic</label><select id="topic" value={topic} onChange={e=>{setTopic(e.target.value);reset();}}><option value="">Any topic</option>{(subjects[subject]||[]).map(t=><option key={t} value={t}>{t}</option>)}</select>
             <label htmlFor="time">Preferred schedule</label><select id="time" value={time} onChange={e=>{setTime(e.target.value);reset();}}><option value="">Any time</option>{slots.map(t=><option key={t} value={t}>{t}</option>)}</select>
             <button type="submit" className="submit" disabled={loading}>{loading?"Finding matches...":"Find " + (mode==="tutor"?"peer tutors":"study groups") + " →"}</button>
           </form>
-          <p className="disclaimer">Use fictional names only. PEERLINK Lite does not collect or save student accounts.</p>
+          <p className="disclaimer">Signed in locally as a fictional student. Account switching resets the demo view; no student records are stored.</p>
         </section>
         <section className="panel results" aria-live="polite" aria-busy={loading}>
           <p className="eyebrow">STEP 02 · RECOMMENDATIONS</p><h2>{mode==="tutor"?"Peer Tutor Finder":"Study Group Finder"}</h2>
