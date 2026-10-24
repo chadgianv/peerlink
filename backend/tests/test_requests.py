@@ -35,9 +35,12 @@ class RequestFlowTests(unittest.TestCase):
             respond_tutoring(created["id"],TutorDecision(account_id="alex",status="accepted"))
         self.assertEqual(err.exception.status_code,403)
 
-    def test_unlinked_tutors_and_mismatch_rejected(self):
+    def test_all_eligible_tutors_and_mismatch_rejected(self):
+        sent=submit_tutoring(TutoringRequest(learner_id="alex",tutor_id="t3",subject="Mathematics",preferred_slot="Wednesday 3 PM"))
+        self.assertEqual(list_tutoring("mark")["requests"][0]["id"],sent["id"])
+        self.assertEqual(respond_tutoring(sent["id"],TutorDecision(account_id="mark",status="accepted"))["status"],"accepted")
         with self.assertRaises(HTTPException):
-            submit_tutoring(TutoringRequest(learner_id="alex",tutor_id="t3",subject="Mathematics",preferred_slot="Wednesday 3 PM"))
+            submit_tutoring(TutoringRequest(learner_id="alex",tutor_id="t10",subject="Mathematics",preferred_slot="Wednesday 3 PM"))
         with self.assertRaises(HTTPException):
             submit_tutoring(TutoringRequest(learner_id="alex",tutor_id="t1",subject="Mathematics",preferred_slot="Thursday 4 PM"))
 
