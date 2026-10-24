@@ -119,3 +119,10 @@ A client-side **five-account fictional demo login** has been proposed after Phas
 Add secure student authentication, teacher-verified tutoring qualifications, parental/school consent where appropriate, protected records, approved communications, real booking acceptance, and learning progress reports.
 
 **Priority:** A small, demonstrably working matching system is preferable to a large, unfinished feature set.
+
+## Additional owner-requested functional tutoring workflow (outside original three hours)
+
+A new, explicitly requested local SQLite demonstration adds **pending → accepted/declined** request state. Alex can request Joshua and Joshua can respond through a sixth fictional login. This supplements the original 180-minute plan; it does not create secure authentication, notifications, or real bookings. Other tutors and group joins are still demonstrations. Do not claim this is safe for real students or public hosting.
+
+### Revised tutor-request demonstration
+All **nine eligible recommended fictional tutors** have login personas and can accept or decline learner requests. Accepted requests display session details (topic, recurring time slot, ID) in both accounts; this is local workflow state, not a real scheduled calendar booking. The original 180-minute plan is unchanged; this is later owner-requested additional scope.

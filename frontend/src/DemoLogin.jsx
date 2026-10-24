@@ -8,7 +8,16 @@ export const DEMO_ACCOUNTS = [
   {id:"mia",username:"mia",name:"Mia Santos",grade:12,focus:"English"},
   {id:"noah",username:"noah",name:"Noah Cruz",grade:11,focus:"Science"},
   {id:"ella",username:"ella",name:"Ella Garcia",grade:12,focus:"Filipino"},
-  {id:"liam",username:"liam",name:"Liam Reyes",grade:11,focus:"Mathematics"}
+  {id:"liam",username:"liam",name:"Liam Reyes",grade:11,focus:"Mathematics"},
+  {id:"joshua",username:"joshua",name:"Joshua Reyes",grade:11,focus:"Mathematics"},
+  {id:"angela",username:"angela",name:"Angela Cruz",grade:11,focus:"Mathematics"},
+  {id:"mark",username:"mark",name:"Mark Santos",grade:12,focus:"Mathematics"},
+  {id:"sofia",username:"sofia",name:"Sofia Garcia",grade:11,focus:"English"},
+  {id:"patricia",username:"patricia",name:"Patricia Flores",grade:12,focus:"English"},
+  {id:"daniel",username:"daniel",name:"Daniel Lim",grade:11,focus:"Science"},
+  {id:"lea",username:"lea",name:"Lea Mendoza",grade:12,focus:"Science"},
+  {id:"carlo",username:"carlo",name:"Carlo Navarro",grade:11,focus:"Filipino"},
+  {id:"isabella",username:"isabella",name:"Isabella Aquino",grade:12,focus:"Filipino"}
 ];
 const DEMO_PASSWORD = "peerlink-demo";
 
@@ -23,7 +32,7 @@ export default function DemoLogin() {
     event.preventDefault();
     const selected = DEMO_ACCOUNTS.find(x=>x.username===username.trim().toLowerCase());
     if (!selected) {
-      setError("Please select one of the five sample accounts.");
+      setError("Please select one of the sample accounts.");
       return;
     }
     setAccount(selected);
@@ -37,7 +46,7 @@ export default function DemoLogin() {
       <div className="login-mark">P</div>
       <p className="eyebrow">PEERLINK LITE · SEMINAR DEMO</p>
       <h1 id="login-title">Welcome to PEERLINK</h1>
-      <p className="login-intro">Choose one of five fictional students and enter the demo instantly. No password is required.</p>
+      <p className="login-intro">Choose one of fictional students and enter the demo instantly. No password is required.</p>
       <form onSubmit={signIn} className="login-form">
         <label htmlFor="demo-user">Demo student account</label>
         <select id="demo-user" value={username} onChange={e=>{setUsername(e.target.value);setError("");}}>

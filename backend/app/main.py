@@ -5,11 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, model_validator
 from .catalog import TOPICS, SLOTS
 from .matching import match_tutors, match_groups
+from .catalog import TUTORS
+from . import requests_store
 
 app = FastAPI(title="PEERLINK Lite API", version="0.2.0")
 app.add_middleware(CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
+    allow_methods=["GET", "POST", "PATCH"], allow_headers=["Content-Type"])
 
 class MatchRequest(BaseModel):
     subject: Literal["Mathematics", "English", "Science", "Filipino"]
@@ -42,3 +44,44 @@ def tutors(req: MatchRequest):
 def groups(req: MatchRequest):
     matches=match_groups(req.subject,req.topic,req.preferred_slot)
     return {"mode":"group","matches":matches,"count":len(matches),"demo_only":True}
+
+# Classroom demonstration: account names are public IDs, NOT authentication.
+class TutoringRequest(BaseModel):
+    learner_id: str = Field(min_length=2,max_length=32)
+    tutor_id: str = Field(min_length=2,max_length=10)
+    subject: Literal["Mathematics","English","Science","Filipino"]
+    topic: str = Field(default="",max_length=80)
+    preferred_slot: str = Field(min_length=1,max_length=50)
+
+class TutorDecision(BaseModel):
+    account_id: str
+    status: Literal["accepted","declined"]
+
+@app.post("/api/requests",status_code=201)
+def submit_tutoring(req: TutoringRequest):
+    tutor=next((x for x in TUTORS if x["id"]==req.tutor_id and x["eligible"]),None)
+    if tutor is None or tutor["subject"] != req.subject:
+        raise HTTPException(422,"Tutor does not offer this subject.")
+    if req.learner_id not in requests_store.ALLOWED_ACCOUNTS:
+        raise HTTPException(422,"Unknown learner demo account.")
+    if req.learner_id == requests_store.TUTOR_ACCOUNT[req.tutor_id]:
+        raise HTTPException(422,"Cannot request tutoring from yourself.")
+    if req.topic and req.topic not in TOPICS[req.subject]:
+        raise HTTPException(422,"Invalid topic.")
+    if req.preferred_slot not in tutor["slots"]:
+        raise HTTPException(422,"Choose an available tutor schedule.")
+    return requests_store.create(req.learner_id,req.tutor_id,req.subject,req.topic,req.preferred_slot)
+
+@app.get("/api/requests")
+def list_tutoring(account_id: str):
+    if account_id not in requests_store.ALLOWED_ACCOUNTS:
+        raise HTTPException(422,"Unknown demo account.")
+    return {"requests":requests_store.listing(account_id),"demo_only":True}
+
+@app.patch("/api/requests/{request_id}")
+def respond_tutoring(request_id: int, decision: TutorDecision):
+    record, err=requests_store.decide(request_id,decision.account_id,decision.status)
+    if err == "not_found": raise HTTPException(404,"Request not found.")
+    if err == "forbidden": raise HTTPException(403,"Only the selected tutor demo account can respond.")
+    if err == "already_decided": raise HTTPException(409,"This request has already been decided.")
+    return record

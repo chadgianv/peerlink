@@ -36,3 +36,5 @@ button:disabled{opacity:.65;cursor:wait}
 .signout:hover{background:#ebf6ff}
 input[readonly],select:disabled{background:#f1f5f8;color:#526d82;cursor:not-allowed}
 @media(max-width:560px){.account-chip{width:100%;margin:10px 0 0;justify-content:space-between}.topbar{flex-wrap:wrap}.login-card{padding:22px}}
+
+.requests-panel{margin-top:20px}.requests-header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.request-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.requests-panel .score{text-transform:capitalize;font-size:15px}@media(max-width:480px){.requests-header{align-items:stretch}.requests-header .request-button{width:100%}}
