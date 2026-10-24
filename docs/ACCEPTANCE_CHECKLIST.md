@@ -84,3 +84,10 @@
 - [ ] Different account still sees join option if the group has remaining seats.
 - [ ] Membership status persists across sign-outs and refreshes in local SQLite.
 - [ ] Backend test, frontend build, and browser behavior verified before declaring runtime PASS.
+
+## Group directory
+- [ ] Approved member may open a fictional roster from accepted membership or recommendations.
+- [ ] Group host may open roster without joining.
+- [ ] Pending or unrelated demo account receives 403 when requesting roster.
+- [ ] Newly accepted members appear by fictional name and username; seeded unnamed members are not misrepresented as identified students.
+- [ ] Python tests, frontend build and desktop/mobile live tests are completed and results reported.
