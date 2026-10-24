@@ -20,3 +20,6 @@ Show the client-side sign-in selector with five fictional profiles and optional 
 ## Optional two-account functional request demo
 
 Alex sends Joshua a request, signs out, Joshua signs in and accepts, then Alex signs in and refreshes to see *accepted*. Local SQLite stores the fictional request; it is not a real appointment or external notification. Sixth fictional login added specifically to demonstrate recipient response.
+
+### Expanded tutor request follow-through
+Demonstrate Alex choosing **any eligible tutor account**, sign in as that tutor to accept, then return to Alex to show the **Session confirmed in PEERLINK demo** card. Clarify a recurring schedule alone is not a dated calendar event, and real meeting coordination remains outside PEERLINK Lite.
