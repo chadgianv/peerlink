@@ -23,3 +23,6 @@ Alex sends Joshua a request, signs out, Joshua signs in and accepts, then Alex s
 
 ### Expanded tutor request follow-through
 Demonstrate Alex choosing **any eligible tutor account**, sign in as that tutor to accept, then return to Alex to show the **Session confirmed in PEERLINK demo** card. Clarify a recurring schedule alone is not a dated calendar event, and real meeting coordination remains outside PEERLINK Lite.
+
+## Revised ranking formula (pending review)
+Shared schedule becomes the top priority at 50 points. A selected time is a hard eligibility filter for tutor and group matches; explain why this makes recommendations actionable. Tutor: 50 time, 30 subject, 15 topic, 5 grade. Group: 50 time, 35 topic, 15 open capacity.
