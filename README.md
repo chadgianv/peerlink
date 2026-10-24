@@ -1,68 +1,62 @@
 # PEERLINK Lite
 
-Seminar-ready peer learning prototype built with **React (Vite)** and **Python (FastAPI)**.
+Seminar-ready **React/Vite + Python/FastAPI** peer tutoring and study group finder prototype.
 
 ## Phase status
+- Phases 0–2: merged into main.
+- Phase 3: integration submitted for review, **not merged** until approved.
+- Phase 4: testing and UI polish (pending).
+- Phase 5: presentation rehearsal (pending).
 
-**Phases 0 and 1 — merged. Phase 2 — proposed for review.** The React interface offers two modes, Peer Tutor Finder and Study Group Finder, with learner preference forms and search previews. Python matching endpoints exist in the Phase 2 branch, but the React interface is not integrated yet. No actual group membership or booking exists. This is not a deployed service.
+## Run locally (Windows)
 
-## Requirements
+Start **two separate terminals** from the repository root.
 
-- Node.js 20+ and npm
-- Python 3.10+
-
-## Run locally
-
-**Terminal 1 — Python API:**
-
-```bash
+**Terminal A — FastAPI**
+```powershell
 cd backend
 python -m venv .venv
-# Windows PowerShell: .venv\\Scripts\\Activate.ps1
-# Windows CMD: .venv\\Scripts\\activate.bat
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8000
 ```
+API documentation: http://127.0.0.1:8000/docs
 
-Open http://127.0.0.1:8000/api/health — expected JSON includes `"status":"ok"`.
-
-**Terminal 2 — React frontend:**
-
-```bash
+**Terminal B — React**
+```powershell
 cd frontend
-npm install
-npm run dev
+npm.cmd install
+npm.cmd run dev
 ```
+Open http://localhost:5173 in a browser.
 
-Open http://localhost:5173 (or the address Vite displays).
+Using `npm.cmd` avoids the PowerShell `npm.ps1` execution-policy error. Install npm dependencies from `frontend/`, not from the repository root.
 
-**Health smoke test** (backend virtual environment active, from `backend/`):
+## Demo workflow (Phase 3)
 
-```bash
-python -m unittest discover -s tests -v
+1. Choose **Find a Peer Tutor** or **Find a Study Group**.
+2. Enter a **fictional** learner name and choose grade, subject, topic, and schedule.
+3. Click **Find**; React sends JSON to either `POST /api/match/tutors` or `POST /api/match/groups`.
+4. Python returns ranked fictional matches; React displays scores, reasons, and schedule details.
+5. Click the matching result's **(demo)** button; a local confirmation appears.
+
+**IMPORTANT:** Session requests and group joining are **front-end-only simulations**. They do not send a booking request to FastAPI, save records, contact classmates, or create group membership.
+
+## Checks
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
-
-**Frontend build:**
-
-```bash
-cd frontend
-npm run build
+And, from `frontend/`:
+```powershell
+npm.cmd run build
 ```
+These checks require local execution; their results must not be reported as passing without running them.
 
-## Roadmap and governance
+## References
+- [Mandatory agent rules](AGENTS.md)
+- [Three-hour development roadmap](docs/THREE_HOUR_PLAN.md)
+- [Presentation outline](docs/PRESENTATION.md)
+- [Presenter script](docs/PRESENTER_SCRIPT.md)
+- [Acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md)
 
-- [3-hour phase roadmap](docs/THREE_HOUR_PLAN.md)
-- [Mandatory review/approval instructions](AGENTS.md)
-
-The approved concept includes **Peer Tutor Finder** and **Study Group Finder**. The Phase 1 review branch proposes a revised roadmap for both modes within 180 minutes; matching implementation comes in Phases 2–3.
-
-For safety, the future demo will use **fictional** students and only **simulated** booking/group requests. No real student information should be added.
-
-## Phase 2 API (review branch)
-
-- `GET /api/options`
-- `POST /api/match/tutors`
-- `POST /api/match/groups`
-
-See [API details](docs/PHASE_2_API.md) and [Phase 2 review](docs/PHASE_2_REVIEW.md). Test locally from `backend/` with `python -m unittest discover -s tests -v` and browse `http://localhost:8000/docs`.
+All sample tutor and group information is fictional. The matching scores are rule-based, **not AI accuracy** or evidence of verified teaching proficiency.
