@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, model_validator
 from .catalog import TOPICS, SLOTS
 from .matching import match_tutors, match_groups
 from .catalog import TUTORS
-from . import requests_store
+from . import requests_store, group_store
 
 app = FastAPI(title="PEERLINK Lite API", version="0.2.0")
 app.add_middleware(CORSMiddleware,
@@ -42,7 +42,8 @@ def tutors(req: MatchRequest):
 
 @app.post("/api/match/groups")
 def groups(req: MatchRequest):
-    matches=match_groups(req.subject,req.topic,req.preferred_slot)
+    available={g["id"]:g for g in group_store.list_groups()}
+    matches=[{**m,"members":available[m["id"]]["members"],"available_seats":available[m["id"]]["available_seats"],"host_id":available[m["id"]]["host_id"]} for m in match_groups(req.subject,req.topic,req.preferred_slot) if available[m["id"]]["available_seats"]>0]
     return {"mode":"group","matches":matches,"count":len(matches),"demo_only":True}
 
 # Classroom demonstration: account names are public IDs, NOT authentication.
@@ -85,3 +86,33 @@ def respond_tutoring(request_id: int, decision: TutorDecision):
     if err == "forbidden": raise HTTPException(403,"Only the selected tutor demo account can respond.")
     if err == "already_decided": raise HTTPException(409,"This request has already been decided.")
     return record
+
+class GroupJoinRequest(BaseModel):
+    account_id: str
+    group_id: str
+
+class GroupJoinDecision(BaseModel):
+    account_id: str
+    status: Literal["accepted","declined"]
+
+@app.get("/api/groups")
+def demo_groups():
+    return {"groups":group_store.list_groups(),"demo_only":True}
+
+@app.get("/api/group-requests")
+def group_inbox(account_id: str):
+    if account_id not in requests_store.ALLOWED_ACCOUNTS:
+        raise HTTPException(422,"Unknown demo account.")
+    return {"requests":group_store.list_requests(account_id),"demo_only":True}
+
+@app.post("/api/group-requests",status_code=201)
+def join_group(req: GroupJoinRequest):
+    data,err=group_store.join(req.account_id,req.group_id)
+    if err: raise HTTPException(409 if err in ("full","already_requested") else 422,err.replace("_"," "))
+    return data
+
+@app.patch("/api/group-requests/{request_id}")
+def decide_group(request_id: int,decision: GroupJoinDecision):
+    data,err=group_store.decide(request_id,decision.account_id,decision.status)
+    if err: raise HTTPException({"not_found":404,"forbidden":403,"already_decided":409,"full":409}[err],err.replace("_"," "))
+    return data
