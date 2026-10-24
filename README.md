@@ -3,9 +3,8 @@
 Seminar-ready **React/Vite + Python/FastAPI** peer tutoring and study group finder prototype.
 
 ## Phase status
-- Phases 0–2: merged into main.
-- Phase 3: integration submitted for review, **not merged** until approved.
-- Phase 4: testing and UI polish (pending).
+- Phases 0–3: merged into main.
+- Phase 4: quality fixes proposed in a review branch; tests not yet executed on the local classroom computer.
 - Phase 5: presentation rehearsal (pending).
 
 ## Run locally (Windows)
