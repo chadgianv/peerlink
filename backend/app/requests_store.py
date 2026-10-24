@@ -4,8 +4,9 @@ import sqlite3
 from pathlib import Path
 
 DB_PATH = Path(os.environ.get("PEERLINK_DEMO_DB", str(Path(__file__).resolve().parent.parent / "peerlink_demo.sqlite3")))
-ALLOWED_ACCOUNTS = {"alex":"Alex Rivera","mia":"Mia Santos","noah":"Noah Cruz","ella":"Ella Garcia","liam":"Liam Reyes","joshua":"Joshua Reyes"}
-TUTOR_ACCOUNT = {"t1":"joshua"}
+from .catalog import TUTORS
+ALLOWED_ACCOUNTS = {"alex", "mia", "noah", "ella", "liam"} | {t["account_id"] for t in TUTORS if t["eligible"]}
+TUTOR_ACCOUNT = {t["id"]:t["account_id"] for t in TUTORS if t["eligible"]}
 
 def connect():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -37,7 +38,14 @@ def get_one(db, request_id):
 
 def listing(account_id):
     with connect() as db:
-        rows=db.execute("SELECT * FROM tutoring_requests WHERE learner_id=? OR tutor_id IN (SELECT 't1' WHERE ?='joshua') ORDER BY id DESC",(account_id,account_id)).fetchall()
+        tutor_ids=[t for t, owner in TUTOR_ACCOUNT.items() if owner == account_id]
+        placeholders=",".join("?" for _ in tutor_ids)
+        query="SELECT * FROM tutoring_requests WHERE learner_id=?"
+        params=[account_id]
+        if tutor_ids:
+            query+=" OR tutor_id IN ("+placeholders+")"
+            params+=tutor_ids
+        rows=db.execute(query+" ORDER BY id DESC",params).fetchall()
         return [dict(r) for r in rows]
 
 def decide(request_id, actor, status):
