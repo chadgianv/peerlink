@@ -61,3 +61,11 @@
 - [ ] On acceptance, both accounts see the demo session confirmation, topic, time slot and request ID.
 - [ ] On decline, learner is instructed to search for another tutor.
 - [ ] No real meeting date, meeting link, or notification is falsely presented as created.
+
+## Availability-first revision
+- [ ] A selected tutor time excludes all tutors not available then.
+- [ ] Study groups at other times are excluded.
+- [ ] Shared availability accounts for 50/100 points in both ranking formulas.
+- [ ] Any time permits exploratory results; sending a request still requires a real shared slot.
+- [ ] Empty state explains how to adjust times.
+- [ ] Run backend regression tests and frontend build, and document actual outcomes.
