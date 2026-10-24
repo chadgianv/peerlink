@@ -1,12 +1,24 @@
-# PEERLINK Lite — Seminar speaking script
+# PEERLINK Lite — Presenter script (updated for Phase 3)
 
-- **Intro:** “PEERLINK Lite helps senior high students discover academic support from their classmates.”
-- **Problem:** “Students may need help with a topic or prefer studying as a group but cannot easily find peers with matching interests and schedules.”
-- **Solution:** “We designed two options: a one-on-one Peer Tutor Finder and a collaborative Study Group Finder.”
-- **Architecture:** “React displays the interface, while Python/FastAPI is planned to compute transparent recommendations from fictional sample data.”
-- **Live demo:** Enter the fictional name Alex Rivera, grade 11, Mathematics, Quadratic Equations, Wednesday 3 PM. Click Preview Search; explain that this phase shows an input summary, **not actual matches**. Switch to Study Group Finder and repeat.
-- **Algorithm:** “The final demo will rank peer tutors and groups using deterministic matching criteria; these scores do not prove tutoring ability.”
-- **Limitations:** “All scenarios are fictional, and requests are simulated. Real accounts, verification, and group membership are outside our three-hour build.”
-- **Close:** “PEERLINK is a focused illustration of how software could improve peer-to-peer learning.”
+**Opening:** “PEERLINK Lite is a student-to-student learning support concept with two options: finding a peer tutor or finding a study group.”
 
-After each accepted phase, update this script only for functionality actually implemented and verified.
+**Problem:** “Students often know what topic they struggle with but do not know who shares their study schedule or has relevant subject strengths.”
+
+**Technology:** “React powers the user interface. FastAPI in Python supplies rankings using fictional records. The browser sends a JSON request and receives ranked matches.”
+
+**Live demo:**
+1. Start both local servers (React on port 5173, Python on port 8000).
+2. Select **Find a Peer Tutor** and use the fictional learner Alex Rivera, Grade 11.
+3. Select **Mathematics → Quadratic Equations → Wednesday 3 PM**, then click **Find peer tutors**.
+4. Explain why the top fictional tutor has the highest rule-based score.
+5. Click **Request tutoring (demo)** and read the simulated-only notice.
+6. Switch to **Find a Study Group**, repeat the search, and show available member seats.
+7. Click **Join group (demo)** and emphasize **no actual membership is created**.
+
+**Scoring:** Tutor points: subject 40, topic 30, time 20, grade 10. Group eligibility: subject match and open seats; score topic 50, time 30, capacity 20.
+
+**Limitations:** “We use fictional names. Tutoring requests and group joins are simulated rather than actual bookings. It is not a school-ready platform.”
+
+**Closing:** “The prototype illustrates how schoolmates could locate academic support efficiently.”
+
+If API testing fails, show screenshots of verified states only; do not claim a successful live demonstration without evidence.
