@@ -26,3 +26,7 @@ Demonstrate Alex choosing **any eligible tutor account**, sign in as that tutor 
 
 ## Revised ranking formula (pending review)
 Shared schedule becomes the top priority at 50 points. A selected time is a hard eligibility filter for tutor and group matches; explain why this makes recommendations actionable. Tutor: 50 time, 30 subject, 15 topic, 5 grade. Group: 50 time, 35 topic, 15 open capacity.
+
+## Study group membership demonstration
+
+Sign in as Alex, find Math Study Circle, and send a join request. Sign out and use group host `joshua` to approve; sign back in as Alex to see accepted membership. Explain that this increases the local group membership counter and available seats are capped.
