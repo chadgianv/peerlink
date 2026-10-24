@@ -125,9 +125,9 @@ export default function App({account, onSignOut}) {
           {confirmation && <div className="notice success" role="status">{confirmation}</div>}
           {loading && <div className="empty"><span>⏳</span><h3>Finding matches...</h3></div>}
           {!loading && !searched && <div className="empty"><span>✦</span><h3>Learning starts with a connection.</h3><p>Choose a subject and search for fictional matches from the Python backend.</p></div>}
-          {!loading && searched && matches.length === 0 && <div className="empty"><span>◇</span><h3>No matches found</h3><p>Try a different subject or adjust your preferences.</p></div>}
+          {!loading && searched && matches.length === 0 && <div className="empty"><span>◇</span><h3>No shared schedule found</h3><p>No available match was found for the selected time. Try another schedule, or choose Any time to explore alternatives.</p></div>}
           {!loading && searched && matches.length > 0 && <div className="match-list">
-            <p className="result-count">{matches.length} {mode==="tutor"?"peer tutors":"study groups"} found · ranked by compatibility</p>
+            <p className="result-count">{matches.length} {mode==="tutor"?"peer tutors":"study groups"} found · ranked by compatibility · shared availability required when a time is selected</p>
             {matches.map((item,index)=><article className="match-card" key={item.id}>
               <div className="match-heading"><div><b>{item.name}</b><small>{mode==="tutor"?"Grade "+item.grade+" · Fictional tutor":"Study group · "+item.available_seats+" seats available"}</small></div><strong className="score">{item.score}/100</strong></div>
               {index===0 && <span className="topmatch">Top match</span>}

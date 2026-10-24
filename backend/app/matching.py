@@ -6,10 +6,12 @@ def match_tutors(subject: str, topic: str = "", slot: str = "", grade: int = 11)
     for tutor in TUTORS:
         if not tutor["eligible"] or tutor["subject"] != subject:
             continue
+        if slot and slot not in tutor["slots"]:
+            continue  # Both learners must have a shared time, not just a partial match.
         topic_fit = not topic or topic in tutor["topics"]
         time_fit = not slot or slot in tutor["slots"]
         grade_fit = tutor["grade"] == grade
-        score = 40 + (30 if topic_fit else 0) + (20 if time_fit else 0) + (10 if grade_fit else 0)
+        score = 30 + (15 if topic_fit else 0) + (50 if time_fit else 0) + (5 if grade_fit else 0)
         ranked.append({**{k:v for k,v in tutor.items() if k != "eligible"}, "score":score,
             "reasons": ["Subject match", "Topic match" if topic_fit else "Other topic expertise",
               "Schedule match" if time_fit else "Different available time",
@@ -21,9 +23,11 @@ def match_groups(subject: str, topic: str = "", slot: str = "") -> list[dict]:
     for group in GROUPS:
         if group["subject"] != subject or group["members"] >= group["capacity"]:
             continue
+        if slot and slot != group["slot"]:
+            continue  # A study group at another time is not an actionable match.
         topic_fit = not topic or group["topic"] == topic
         time_fit = not slot or group["slot"] == slot
-        score = (50 if topic_fit else 0) + (30 if time_fit else 0) + 20
+        score = (35 if topic_fit else 0) + (50 if time_fit else 0) + 15
         ranked.append({**group,"available_seats":group["capacity"]-group["members"],"score":score,
           "reasons":["Subject match", "Topic match" if topic_fit else "Different topic",
             "Schedule match" if time_fit else "Different schedule", "Open seats"]})
