@@ -44,3 +44,11 @@ Show the accepted card to both tutor and learner: session reference, matched top
 
 ## Availability-first demonstration
 Select Friday 2 PM and Mathematics: only tutors available then should appear. Switch to Wednesday 3 PM to demonstrate changing results. Explain that time contributes 50/100 scoring points and that a mismatch is filtered out rather than recommended. Choose Any time only to explore potential candidates; choose an actual overlapping time before submitting a request.
+
+## Study group request demo
+
+1. Enter `alex` and choose Find a Study Group with Mathematics / Quadratic Equations / Wednesday 3 PM.
+2. Select Math Study Circle and **Request to join group**.
+3. Switch to `joshua`, the fictional host, then choose **Approve member** in Study Groups.
+4. Switch back to `alex` and Refresh group requests; show the accepted membership, then re-search to observe updated seat counts.
+5. Clarify this is a local demo workflow, not a secure school system or actual group chat.
