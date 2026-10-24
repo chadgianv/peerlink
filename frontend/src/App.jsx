@@ -73,10 +73,9 @@ export default function App({account, onSignOut}) {
     }
   }
   async function submitTutor(item) {
-    if(item.id!=="t1"){setConfirmation("To demonstrate a two-account request, select Joshua Reyes. The other tutors are matching-only fictional profiles.");return;}
-    if(!time || !item.slots.includes(time)){setConfirmation("Choose a schedule offered by Joshua before submitting a real demo request.");return;}
+    if(!time || !item.slots.includes(time)){setConfirmation("Choose a schedule offered by "+item.name+" before sending the request.");return;}
     setBusyRequest(true);setRequestError("");
-    try {const result=await request("/api/requests",{learner_id:account.id,tutor_id:item.id,subject,topic,preferred_slot:time});setConfirmation("Request #"+result.id+" sent to Joshua Reyes. Status: pending. Sign out and enter Joshua’s account to respond.");await loadRequests();}
+    try {const result=await request("/api/requests",{learner_id:account.id,tutor_id:item.id,subject,topic,preferred_slot:time});setConfirmation("Request #"+result.id+" sent to "+item.name+". Status: pending. Sign out and sign in as @"+item.account_id+" to respond.");await loadRequests();}
     catch(e){setRequestError("Could not submit tutoring request: "+e.message);}
     finally{setBusyRequest(false);}
   }
@@ -134,21 +133,23 @@ export default function App({account, onSignOut}) {
               {index===0 && <span className="topmatch">Top match</span>}
               <p className="match-meta">{mode==="tutor"?"Topics: "+item.topics.join(", ")+" · Times: "+item.slots.join(", "):"Topic: "+item.topic+" · Time: "+item.slot+" · Members: "+item.members+"/"+item.capacity}</p>
               <div className="reasons">{item.reasons.map((reason,i)=><span key={i}>{reason}</span>)}</div>
-              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):simulate(item)} disabled={busyRequest}>{mode==="tutor"?(item.id==="t1"?"Send tutoring request":"Tutor demo only"):"Join group (demo)"}</button>
+              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):simulate(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id)}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):"Join group (demo)"}</button>
             </article>)}
           </div>}
-          <p className="disclaimer">Rankings are rule-based. Joshua tutoring requests are saved locally; study-group joins remain simulated. Demo identities are not authenticated.</p>
+          <p className="disclaimer">Rankings are rule-based. Tutoring requests are saved locally and can be accepted by any listed tutor account; study-group joins remain simulated. Demo identities are not authenticated.</p>
         </section>
       </div>
       <section className="panel requests-panel" aria-live="polite">
-        <div className="requests-header"><div><p className="eyebrow">STEP 03 · TUTORING REQUESTS</p><h2>{account.id==="joshua"?"Joshua's incoming requests":"My tutoring requests"}</h2></div><button type="button" className="request-button" onClick={loadRequests}>Refresh requests</button></div>
-        {requests.length===0?<p className="result-count">No tutoring requests yet. Alex can request Joshua above; sign in as Joshua to accept or decline.</p>:
+        <div className="requests-header"><div><p className="eyebrow">STEP 03 · TUTORING REQUESTS</p><h2>{"My tutoring requests & tutor inbox"}</h2></div><button type="button" className="request-button" onClick={loadRequests}>Refresh requests</button></div>
+        {requests.length===0?<p className="result-count">No tutoring requests yet. Find a tutor and send a request, then enter their demo account to respond.</p>:
           <div className="match-list">{requests.map(item=><article className="match-card" key={item.id}>
             <div className="match-heading"><div><b>Request #{item.id} · {item.subject}</b><small>{item.topic||"Any topic"} · {item.slot}</small></div><strong className="score">{item.status}</strong></div>
-            <p className="match-meta">From {item.learner_id} to Joshua Reyes · {item.created_at} UTC</p>
-            {account.id==="joshua" && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"accepted")}>Accept request</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"declined")}>Decline request</button></div>}
+            <p className="match-meta">From @{item.learner_id} to @{({t1:"joshua",t2:"angela",t3:"mark",t4:"sofia",t5:"patricia",t6:"daniel",t7:"lea",t8:"carlo",t9:"isabella"})[item.tutor_id]} · {item.created_at} UTC</p>
+            {item.status==="accepted" && <div className="accepted-session"><strong>Session confirmed in PEERLINK demo</strong><p>Topic: {item.subject} — {item.topic||"General review"}</p><p>Agreed schedule: {item.slot}</p><p>Next step: both students should coordinate their meeting place outside this prototype. This is not a calendar booking or notification.</p><small>Reference: Tutoring request #{item.id} · Accepted</small></div>}
+            {item.status==="declined" && <div className="notice error">The tutor declined this request. Please search for another available tutor.</div>}
+            {({t1:"joshua",t2:"angela",t3:"mark",t4:"sofia",t5:"patricia",t6:"daniel",t7:"lea",t8:"carlo",t9:"isabella"})[item.tutor_id]===account.id && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"accepted")}>Accept request</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"declined")}>Decline request</button></div>}
           </article>)}</div>}
-        <p className="disclaimer">Requests are kept only in this local FastAPI demo database. No emails, notifications or real appointments are sent.</p>
+        <p className="disclaimer">Accepted requests display a demo session confirmation with the agreed schedule. Requests are saved in local SQLite; no notifications, meeting links or real calendar bookings are created.</p>
       </section>
     </main><footer>PEERLINK Lite · React + Python FastAPI · Seminar prototype</footer>
   </div>;
