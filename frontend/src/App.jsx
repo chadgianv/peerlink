@@ -115,7 +115,7 @@ export default function App({account, onSignOut}) {
   }
 
   return <div className="app">
-    <header className="topbar"><div className="logo">P</div><div><b>PEERLINK Lite</b><small>Learn better, together</small></div><div className="account-chip"><span>{account.name} · Grade {account.grade}</span><button type="button" className="signout" onClick={()=>{reset();onSignOut();}}>Sign out</button></div></header>
+    <header className="topbar"><img className="topbar-brand" src="/peerlink-logo.svg" alt="PEERLINK — Learn better, together" /><div className="account-chip"><span>{account.name} · Grade {account.grade}</span><button type="button" className="signout" onClick={()=>{reset();onSignOut();}}>Sign out</button></div></header>
     <main className="page">
       <section className="hero"><p className="eyebrow">STUDENT-TO-STUDENT LEARNING</p><h1>Find your people.<br/><em>Learn your way.</em></h1><p>Discover a peer tutor or a study group matched to your topic and schedule. All student profiles are fictional.</p></section>
       <div className="columns">
