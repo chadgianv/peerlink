@@ -148,3 +148,7 @@ A refreshed 10-slide Markdown outline, two-account tutor and group demonstration
 
 ## Additional flexible scheduling request
 Tutor matching retains strong shared-time eligibility for a specified slot; **Any time** deliberately removes that restriction. The student may submit a request without specifying a time, and accepting does not claim a mutually scheduled meeting. Group matching remains based on group session times. This refinement is outside the original 180-minute roadmap.
+
+## Additional branding refinement
+
+The PEERLINK concept logo is represented by two reusable vector assets: full wordmark in the login/header and icon for the browser tab. These replace the previous placeholder `P` in the application. This is outside the original three-hour roadmap.
