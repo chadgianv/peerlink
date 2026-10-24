@@ -9,7 +9,7 @@ Seminar-ready **React/Vite + Python/FastAPI** peer tutoring and study group find
 
 ## Optional five-account demo login (feature branch under review)
 
-The owner requested a simple classroom login to switch between five **fictional profiles**. This feature is separate from the original 180-minute roadmap. On the proposed review branch, choose one of these usernames: `alex`, `mia`, `noah`, `ella`, or `liam`. Each uses the same **public demo password**: `peerlink-demo`.
+The owner requested a simple classroom login to switch between five **fictional profiles**. This feature is separate from the original 180-minute roadmap. On the proposed review branch, choose one of these usernames: `alex`, `mia`, `noah`, `ella`, or `liam`. The displayed sample password is **`peerlink-demo`**, but entering a password is **optional**. Select an account and click **Enter demo as selected student** to continue immediately; any entered password text is ignored.
 
 This is **not secure authentication**: the profiles and password are visible in frontend source, no backend endpoint is protected, and no sessions are persisted. The browser returns to login on refresh. After sign-in, the fictional student's name, grade and initial subject are applied to the finder; Sign out returns to account selection.
 
