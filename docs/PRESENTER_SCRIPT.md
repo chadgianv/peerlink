@@ -54,3 +54,5 @@ Select Friday 2 PM and Mathematics: only tutors available then should appear. Sw
 5. Clarify this is a local demo workflow, not a secure school system or actual group chat.
 
 After approving Alex's group membership, sign in as Alex, search the same study group again, and show its **Already a member** badge and disabled button. A pending request is labeled **Request pending**.
+
+After Alex joins Math Study Circle, select **View group members** in the accepted membership card. Show Joshua as host and Alex among approved joiners, with demo usernames for switching profiles. PEERLINK does not provide built-in messaging or secure identity verification.
