@@ -34,8 +34,8 @@
  
 ## Five-account demo login add-on (awaiting owner approval)
 - [ ] Login displays five fictional accounts, and their usernames are documented.
-- [ ] Wrong password is rejected by the demo UI.
-- [ ] Public demo password signs into each selected profile.
+- [ ] Account can enter with the password field blank (one-click demo access).
+- [ ] Shared example password `peerlink-demo` is clearly visible and accepted; no password security is implied.
 - [ ] Profile name, grade and default subject reflect the selected account.
 - [ ] Sign out returns to the login screen; refresh resets the session.
 - [ ] Tutor/group search still works for different dummy accounts.
