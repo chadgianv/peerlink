@@ -53,3 +53,11 @@
 - [ ] Local SQLite file is ignored by Git and persists after browser refresh.
 - [ ] Python tests and React build executed with results recorded.
 - [ ] App and docs explicitly state lack of secure authentication.
+
+## Recommendation-account linkage and post-acceptance
+- [ ] Every eligible tutor returned by API has `account_id` and matching selectable dummy login.
+- [ ] Learner can send an available-slot request to a tutor other than Joshua.
+- [ ] Recipient sees the incoming request and may accept/decline.
+- [ ] On acceptance, both accounts see the demo session confirmation, topic, time slot and request ID.
+- [ ] On decline, learner is instructed to search for another tutor.
+- [ ] No real meeting date, meeting link, or notification is falsely presented as created.
