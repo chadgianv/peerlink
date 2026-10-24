@@ -58,7 +58,7 @@ These points are a **ranking heuristic**, not an AI prediction, statistical prob
 
 ## Additional owner-requested demonstration feature (outside the original 180-minute budget)
 
-A client-side **five-account fictional demo login** has been proposed after Phase 4. It is a classroom account switcher only: one publicly displayed shared demo password, no backend authentication, no real security controls, no database, and no persistent accounts. The five profiles personalize the visible name, grade, and initial subject for demonstration. This is **additional scope**, not retroactively part of the original three-hour commitment. Real account security remains out of scope.
+A client-side **five-account fictional demo login** has been proposed after Phase 4. It is a classroom account switcher only: an optional, publicly displayed sample password (`peerlink-demo`), no backend authentication, no real security controls, no database, and no persistent accounts. The five profiles personalize the visible name, grade, and initial subject for demonstration. This is **additional scope**, not retroactively part of the original three-hour commitment. Real account security remains out of scope.
 
 ## Explicitly excluded from the 3-hour prototype
 - Real student registration and authentication
