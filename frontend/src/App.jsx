@@ -65,7 +65,7 @@ export default function App({account, onSignOut}) {
     setLoading(true);
     try {
       const result = await request("/api/match/" + (mode === "tutor" ? "tutors" : "groups"), {
-        subject, topic, preferred_slot:time, grade:Number(grade)
+        subject, topic, preferred_slot:time, grade:Number(grade),account_id:account.id
       }, controller.signal);
       if (!controller.signal.aborted) {setMatches(result.matches);setSearched(true);}
     } catch (err) {
@@ -91,7 +91,7 @@ export default function App({account, onSignOut}) {
   }
   async function sendGroupRequest(item) {
     setBusyRequest(true);setRequestError("");
-    try {const result=await request("/api/group-requests",{account_id:account.id,group_id:item.id});setConfirmation("Group join request #"+result.id+" is pending. Sign in as @"+item.host_id+" to review.");await loadGroupRequests();}
+    try {const result=await request("/api/group-requests",{account_id:account.id,group_id:item.id});setConfirmation("Group join request #"+result.id+" is pending. Sign in as @"+item.host_id+" to review.");setMatches(previous=>previous.map(group=>group.id===item.id?{...group,membership_status:"pending"}:group));await loadGroupRequests();}
     catch(e){setRequestError("Could not request group membership: "+e.message);}
     finally{setBusyRequest(false);}
   }
@@ -146,7 +146,9 @@ export default function App({account, onSignOut}) {
               {index===0 && <span className="topmatch">Top match</span>}
               <p className="match-meta">{mode==="tutor"?"Topics: "+item.topics.join(", ")+" · Times: "+item.slots.join(", "):"Topic: "+item.topic+" · Time: "+item.slot+" · Members: "+item.members+"/"+item.capacity}</p>
               <div className="reasons">{item.reasons.map((reason,i)=><span key={i}>{reason}</span>)}</div>
-              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):sendGroupRequest(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id) || (mode==="group" && item.host_id===account.id)}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):(item.host_id===account.id?"Your study group":"Request to join group")}</button>
+              {mode==="group" && item.membership_status==="accepted" && <span className="topmatch" role="status">✓ Already a member</span>}
+              {mode==="group" && item.membership_status==="pending" && <span className="topmatch" role="status">Join request pending</span>}
+              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):sendGroupRequest(item)} disabled={busyRequest || (mode==="tutor" && item.account_id===account.id) || (mode==="group" && (item.host_id===account.id || item.membership_status==="accepted" || item.membership_status==="pending"))}>{mode==="tutor"?(item.account_id===account.id?"Your tutor profile":"Send tutoring request"):(item.host_id===account.id?"Your study group":item.membership_status==="accepted"?"Already a member":item.membership_status==="pending"?"Request pending":"Request to join group")}</button>
             </article>)}
           </div>}
           <p className="disclaimer">Rankings are rule-based. Tutoring requests are saved locally and can be accepted by any listed tutor account; study-group join requests are saved locally and reviewed by demo group hosts. Demo identities are not authenticated.</p>
