@@ -43,7 +43,7 @@ export default function DemoLogin() {
 
   return <main className="login-shell">
     <section className="login-card" aria-labelledby="login-title">
-      <div className="login-mark">P</div>
+      <img className="login-brand" src="/peerlink-logo.svg" alt="PEERLINK — Learn better, together" />
       <p className="eyebrow">PEERLINK LITE · SEMINAR DEMO</p>
       <h1 id="login-title">Welcome to PEERLINK</h1>
       <p className="login-intro">Choose one of fictional students and enter the demo instantly. No password is required.</p>
