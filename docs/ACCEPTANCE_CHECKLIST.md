@@ -1,22 +1,24 @@
-# Acceptance checklist — PEERLINK Lite
+# PEERLINK Lite — Acceptance checklist
 
-## Phase 1: student interface
-- [ ] Page opens locally in React
-- [ ] User can switch between **Peer Tutor Finder** and **Study Group Finder**
-- [ ] Learner name, grade, subject, topic and schedule controls are labeled
-- [ ] Changing subject resets the topic
-- [ ] Search preview shows selected preferences for either mode
-- [ ] Copy states matching and requests are **not yet functional**
-- [ ] Responsive layout works at desktop and mobile sizes
-- [ ] Frontend build passed and browser behavior verified (record actual result)
+## Phase 3 integration (verify locally)
+- [ ] Python server runs on port 8000.
+- [ ] React frontend runs on port 5173.
+- [ ] Peer Tutor Finder retrieves ranked results via `POST /api/match/tutors`.
+- [ ] Study Group Finder retrieves ranked results via `POST /api/match/groups`.
+- [ ] Changing the subject resets old matches and topic.
+- [ ] Ranked cards display names, score, match reasons, and time slots or available seats.
+- [ ] Loading, offline API, and no-result states are understandable.
+- [ ] Tutor request shows “SIMULATED” and confirms no booking or notification.
+- [ ] Group join shows “SIMULATED” and confirms no membership was created.
+- [ ] `npm.cmd run build` completes.
+- [ ] Backend unit tests pass.
+- [ ] At least one desktop and one mobile viewport tested.
 
-## Phase 2–3 (not Phase 1)
-- [ ] Python ranks eligible tutors and groups
-- [ ] Study groups have room for new members
-- [ ] React displays live API results and reasons
-- [ ] Only simulated tutoring / join requests, no real messages
+## Not implemented
+- Real registration, direct messaging, notifications, group membership, or booking persistence.
+- Teacher verification of actual tutors and secure student identity records.
 
 ## Seminar
-- [ ] Presentation accurately covers both modes
-- [ ] Demo is rehearsed with fictional profiles
-- [ ] No real student data or production claims
+- [ ] Presentation and script accurately describe simulated vs functional behavior.
+- [ ] Both finder modes can be demonstrated.
+- [ ] Fictional data is used exclusively.
