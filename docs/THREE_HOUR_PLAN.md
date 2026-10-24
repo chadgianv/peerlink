@@ -141,3 +141,7 @@ The matching API may annotate each group recommendation with the current fiction
 ## Additional owner-requested group member directory
 
 An approved group member or group host may view the fictional roster of named approved joiners and the host. Seeded participant counts have no identity mappings and are displayed only as unnamed counts. This is additional post-roadmap scope and not secure access control.
+
+## Phase 5 — Presentation preparation status
+
+A refreshed 10-slide Markdown outline, two-account tutor and group demonstration scripts, Q&A, fallback instructions, and final acceptance checks are proposed on the Phase 5 review branch. The original 15-minute Phase 5 allowance was for review and rehearsal; many previously approved additional features were outside the original 180-minute roadmap. **Rehearsal, live browser confirmation, frontend build, and Python tests are not yet verified**, so this must not be described as a fully completed and tested seminar deliverable. No PPTX is present in this work.

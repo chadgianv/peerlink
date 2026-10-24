@@ -3,11 +3,10 @@
 Seminar-ready **React/Vite + Python/FastAPI** peer tutoring and study group finder prototype.
 
 ## Phase status
-- Phases 0–3: merged into main.
-- Phase 4: merged into main (live local runtime checks still unverified).
-- Phase 5: presentation rehearsal (pending).
+- Phases 0–4 and follow-on requests through PR #11: merged into main.
+- Phase 5: presentation outline and presenter script proposed for review; live rehearsal/build tests remain unverified.
 
-## Optional five-account demo login (feature branch under review)
+## Fictional demo accounts
 
 The owner requested a simple classroom login to switch between five **fictional profiles**. This feature is separate from the original 180-minute roadmap. On the proposed review branch, choose one of these usernames: `alex`, `mia`, `noah`, `ella`, or `liam`. The displayed sample password is **`peerlink-demo`**, but entering a password is **optional**. Select an account and click **Enter demo as selected student** to continue immediately; any entered password text is ignored.
 
@@ -52,7 +51,7 @@ Try `http://127.0.0.1:8000/api/health` first. If the health check fails, start t
 4. Python returns ranked fictional matches; React displays scores, reasons, and schedule details.
 5. Click the matching result's **(demo)** button; a local confirmation appears.
 
-**IMPORTANT:** Session requests and group joining are **front-end-only simulations**. They do not send a booking request to FastAPI, save records, contact classmates, or create group membership.
+**IMPORTANT:** Tutor requests and group joins now save local fictional request/membership states in SQLite and can be accepted/declined by a recipient or host. This does **not** create real appointments, notifications, verified student accounts, messaging, or meetings.
 
 ## Checks
 ```powershell
@@ -74,27 +73,31 @@ These checks require local execution; their results must not be reported as pass
 
 All sample tutor and group information is fictional. The matching scores are rule-based, **not AI accuracy** or evidence of verified teaching proficiency.
 
-## Functional local tutoring workflow (owner-requested extension, PR under review)
+## Functional local tutoring workflow
 
 Sign in as **Alex Rivera**, search Mathematics / Quadratic Equations / Wednesday 3 PM, and click **Send tutoring request** on **Joshua Reyes**. FastAPI writes a *pending* request to the local SQLite file `backend/peerlink_demo.sqlite3` (ignored by Git). Sign out and use the additional **Joshua Reyes** demo account (`joshua`, optional demo password), view **incoming requests**, and choose **Accept** or **Decline**. Sign back in as Alex and click **Refresh requests** to see the final status. Fourteen selectable fictional accounts now exist: the original five learners and nine eligible tutor personas.
 
-Every eligible recommended tutor now has a corresponding fictional sign-in account: `joshua`, `angela`, `mark`, `sofia`, `patricia`, `daniel`, `lea`, `carlo`, and `isabella`. The original five learner accounts remain available. Study-group joining remains simulated. Status survives browser refresh and account switching while the same backend/database is used; it does not send notifications, create actual appointments or protect identity. The demo account ID is supplied by the browser and **can be impersonated**; this must never be exposed publicly or used with real personal records. For a fresh seminar scenario, stop FastAPI and delete `backend/peerlink_demo.sqlite3` before restarting.
+Every eligible recommended tutor now has a corresponding fictional sign-in account: `joshua`, `angela`, `mark`, `sofia`, `patricia`, `daniel`, `lea`, `carlo`, and `isabella`. The original five learner accounts remain available. Study-group joining uses a local demo join-and-approval workflow. Status survives browser refresh and account switching while the same backend/database is used; it does not send notifications, create actual appointments or protect identity. The demo account ID is supplied by the browser and **can be impersonated**; this must never be exposed publicly or used with real personal records. For a fresh seminar scenario, stop FastAPI and delete `backend/peerlink_demo.sqlite3` before restarting.
 
 ### After the tutor accepts
 
 Both accounts can open **My tutoring requests & tutor inbox** and see the accepted status, subject/topic, agreed recurring time slot and session reference. The UI calls this a **demo session confirmation**. The participants must arrange a physical or online meeting separately; the app does not yet generate meeting links, calendar dates, notifications, or actual appointments. A declined request instead prompts the student to search again.
 
-## Availability-first rankings (proposed PR)
+## Availability-first rankings
 
 When a preferred schedule is selected, recommendations **exclude** tutors or groups that do not meet at that time. Tutor score: **50 shared schedule + 30 matching subject (required) + 15 topic + 5 same grade**. Group score: **50 schedule + 35 topic + 15 available capacity**, with subject and open seats mandatory. Use **Any time** to explore options, then select a shared slot before sending a tutoring request. This prevents showing a high-ranked tutor who cannot meet at the learner's chosen time.
 
-## Functional Study Group Finder (proposed PR)
+## Functional Study Group Finder
 
 Search with **Find a Study Group** and request membership in an available fictional group. The group's demo host reviews a pending request, accepts or declines, and the learner sees the updated status after signing back in. Host accounts: Math Study Circle → `joshua`, Algebra Buddies → `angela`, English Review Club → `sofia`, Science Study Buddies → `daniel`, Panitikan Circle → `carlo`. Full Equation Explorers stays unavailable. Accepted membership increases the group's locally stored seat usage; the backend prevents approval beyond capacity. Use **Refresh group requests** after switching accounts. SQLite is local only; no actual class groups, chats, authentication, or notifications exist.
 
-### Study group recommendation membership indicators (review branch)
+### Study group recommendation membership indicators
 Recommended groups show **Already a member** and a disabled button when the signed-in fictional account has an accepted join request. Pending join requests likewise show **Request pending** and disable repeat submission. Group recommendation results are annotated by the backend for the selected demo account; group hosts cannot join their own groups. Re-search after the host accepts to see the updated status.
 
-## Group member directory (pending review)
+## Group member directory
 
 After the group host approves a join request, the accepted member can click **View group members** from the accepted request card. The host and approved joiners can also open **View members** from group recommendations. The directory lists the host and accepted joiners by fictional name and demo username, plus the group's subject, topic, and recurring schedule. Original placeholder members have only seeded counts, not linked accounts; they appear as an unnamed count rather than invented names. Endpoint: `GET /api/groups/{group_id}/members?account_id=...`; unapproved accounts receive HTTP 403. **Demo account IDs are unauthenticated and may be impersonated; never put real student contact information into this prototype.** No chat or private contact details.
+
+## Final seminar preparation (Phase 5 review branch)
+
+See [final slide-by-slide outline](docs/PRESENTATION.md), [timed demo / speaker script](docs/PRESENTER_SCRIPT.md), and [acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md). The Phase 5 delivery is documentation for a seminar demonstration, **not** an exported PowerPoint deck or verified live demo. Backend tests, frontend build, and browser/mobile checks still require execution on a running local project.
