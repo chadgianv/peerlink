@@ -4,7 +4,7 @@ Seminar-ready peer learning prototype built with **React (Vite)** and **Python (
 
 ## Phase status
 
-**Phase 0 — foundation proposed for review.** No tutor recommendations or study group functionality exists yet. Those belong to later phases. This is not a deployed service.
+**Phase 0 — merged. Phase 1 — proposed for review.** The React interface offers two modes, Peer Tutor Finder and Study Group Finder, with learner preference forms and search previews. No matching API integration, actual group membership, or booking exists yet. This is not a deployed service.
 
 ## Requirements
 
@@ -55,6 +55,6 @@ npm run build
 - [3-hour phase roadmap](docs/THREE_HOUR_PLAN.md)
 - [Mandatory review/approval instructions](AGENTS.md)
 
-The approved concept includes **Peer Tutor Finder** and **Study Group Finder**. The current roadmap on `main` details tutor matching; a scoped roadmap revision for group matching should be proposed for owner review before those implementation phases.
+The approved concept includes **Peer Tutor Finder** and **Study Group Finder**. The Phase 1 review branch proposes a revised roadmap for both modes within 180 minutes; matching implementation comes in Phases 2–3.
 
 For safety, the future demo will use **fictional** students and only **simulated** booking/group requests. No real student information should be added.
