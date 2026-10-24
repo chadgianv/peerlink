@@ -29,6 +29,13 @@ class RequestFlowTests(unittest.TestCase):
             respond_tutoring(created["id"],TutorDecision(account_id="joshua",status="declined"))
         self.assertEqual(err.exception.status_code,409)
 
+    def test_flexible_request(self):
+        req=TutoringRequest(learner_id="alex",tutor_id="t1",subject="Mathematics",preferred_slot="")
+        result=submit_tutoring(req)
+        self.assertEqual(result["slot"],"")
+        accepted=respond_tutoring(result["id"],TutorDecision(account_id="joshua",status="accepted"))
+        self.assertEqual(accepted["status"],"accepted")
+
     def test_non_tutor_cannot_decide(self):
         created=submit_tutoring(TutoringRequest(learner_id="alex",tutor_id="t1",subject="Mathematics",topic="Algebra",preferred_slot="Wednesday 3 PM"))
         with self.assertRaises(HTTPException) as err:
