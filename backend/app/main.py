@@ -47,7 +47,7 @@ def groups(req: MatchRequest):
 
 # Classroom demonstration: account names are public IDs, NOT authentication.
 class TutoringRequest(BaseModel):
-    learner_id: Literal["alex","mia","noah","ella","liam"]
+    learner_id: str = Field(min_length=2,max_length=32)
     tutor_id: str = Field(min_length=2,max_length=10)
     subject: Literal["Mathematics","English","Science","Filipino"]
     topic: str = Field(default="",max_length=80)
@@ -62,8 +62,8 @@ def submit_tutoring(req: TutoringRequest):
     tutor=next((x for x in TUTORS if x["id"]==req.tutor_id and x["eligible"]),None)
     if tutor is None or tutor["subject"] != req.subject:
         raise HTTPException(422,"Tutor does not offer this subject.")
-    if req.tutor_id not in requests_store.TUTOR_ACCOUNT:
-        raise HTTPException(422,"Only Joshua Reyes is linked to a demonstration login; choose Joshua for the two-account workflow.")
+    if req.learner_id not in requests_store.ALLOWED_ACCOUNTS:
+        raise HTTPException(422,"Unknown learner demo account.")
     if req.learner_id == requests_store.TUTOR_ACCOUNT[req.tutor_id]:
         raise HTTPException(422,"Cannot request tutoring from yourself.")
     if req.topic and req.topic not in TOPICS[req.subject]:
