@@ -69,3 +69,11 @@
 - [ ] Any time permits exploratory results; sending a request still requires a real shared slot.
 - [ ] Empty state explains how to adjust times.
 - [ ] Run backend regression tests and frontend build, and document actual outcomes.
+
+## Functional Study Group Finder
+- [ ] Match results exclude full groups and nonmatching times.
+- [ ] Joining creates pending group request and routes it to correct host.
+- [ ] Host can accept or decline; learner sees status on refresh.
+- [ ] Accepted membership increases dynamic group member count and reduces seats.
+- [ ] Host cannot approve over capacity; duplicates rejected.
+- [ ] Python group tests, backend API smoke checks, Vite build and browser testing completed and reported honestly.
