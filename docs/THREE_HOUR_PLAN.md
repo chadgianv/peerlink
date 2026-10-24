@@ -134,3 +134,6 @@ For tutor matches, subject eligibility is required; if a learner specifies a tim
 ## Owner-requested functional Study Group Finder extension
 
 The group finder now proposes a local SQLite request workflow: pending group join → host accepts/declines → accepted demo membership and updated group capacity. Selected schedules remain mandatory. Every joinable group has a host account, while the full demo group cannot receive join requests. This is additional scope beyond the original 180 minutes; there are still no real students, messages, or secure authentication.
+
+### Owner-requested group recommendation membership UI
+The matching API may annotate each group recommendation with the current fictional account's accepted or pending membership status. Accepted accounts see **Already a member**, with the join control disabled; pending accounts cannot submit duplicate requests. This is additional post-roadmap scope.

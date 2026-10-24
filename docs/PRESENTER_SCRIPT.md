@@ -52,3 +52,5 @@ Select Friday 2 PM and Mathematics: only tutors available then should appear. Sw
 3. Switch to `joshua`, the fictional host, then choose **Approve member** in Study Groups.
 4. Switch back to `alex` and Refresh group requests; show the accepted membership, then re-search to observe updated seat counts.
 5. Clarify this is a local demo workflow, not a secure school system or actual group chat.
+
+After approving Alex's group membership, sign in as Alex, search the same study group again, and show its **Already a member** badge and disabled button. A pending request is labeled **Request pending**.

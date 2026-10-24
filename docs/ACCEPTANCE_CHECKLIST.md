@@ -77,3 +77,10 @@
 - [ ] Accepted membership increases dynamic group member count and reduces seats.
 - [ ] Host cannot approve over capacity; duplicates rejected.
 - [ ] Python group tests, backend API smoke checks, Vite build and browser testing completed and reported honestly.
+
+## Group membership indicators
+- [ ] Accepted group member sees **Already a member** in recommendations and disabled join button.
+- [ ] Pending join requester sees **Request pending** and disabled join button.
+- [ ] Different account still sees join option if the group has remaining seats.
+- [ ] Membership status persists across sign-outs and refreshes in local SQLite.
+- [ ] Backend test, frontend build, and browser behavior verified before declaring runtime PASS.

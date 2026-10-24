@@ -18,6 +18,7 @@ class MatchRequest(BaseModel):
     topic: str = Field(default="", max_length=80)
     preferred_slot: str = Field(default="", max_length=50)
     grade: Literal[11, 12] = 11
+    account_id: str = Field(default="",max_length=32)
 
     @model_validator(mode="after")
     def validate_options(self):
@@ -42,8 +43,11 @@ def tutors(req: MatchRequest):
 
 @app.post("/api/match/groups")
 def groups(req: MatchRequest):
+    if req.account_id and req.account_id not in requests_store.ALLOWED_ACCOUNTS:
+        raise HTTPException(422,"Unknown demo account.")
     available={g["id"]:g for g in group_store.list_groups()}
-    matches=[{**m,"members":available[m["id"]]["members"],"available_seats":available[m["id"]]["available_seats"],"host_id":available[m["id"]]["host_id"]} for m in match_groups(req.subject,req.topic,req.preferred_slot) if available[m["id"]]["available_seats"]>0]
+    memberships={r["group_id"]:r["status"] for r in group_store.list_requests(req.account_id) if r["learner_id"]==req.account_id} if req.account_id else {}
+    matches=[{**m,"members":available[m["id"]]["members"],"available_seats":available[m["id"]]["available_seats"],"host_id":available[m["id"]]["host_id"],"membership_status":memberships.get(m["id"],"")} for m in match_groups(req.subject,req.topic,req.preferred_slot) if available[m["id"]]["available_seats"]>0 or memberships.get(m["id"])=="accepted"]
     return {"mode":"group","matches":matches,"count":len(matches),"demo_only":True}
 
 # Classroom demonstration: account names are public IDs, NOT authentication.
