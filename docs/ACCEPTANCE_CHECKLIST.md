@@ -42,3 +42,14 @@
 - [ ] Mobile layout does not overflow.
 - [ ] Frontend production build and browser checks are executed and results recorded.
 - [ ] Documentation warns that demo credentials do **not** provide real access control.
+
+## Owner-requested functional request demonstration
+- [ ] Alex sends request to Joshua and gets pending record ID.
+- [ ] Joshua's incoming inbox lists Alex's request after account switch.
+- [ ] Joshua accepts/declines, and Alex sees the updated status after refresh.
+- [ ] Other student account cannot decide as tutor (demo API response).
+- [ ] Re-deciding a resolved request returns 409.
+- [ ] Invalid schedule, unknown recipient and mismatched subject rejected.
+- [ ] Local SQLite file is ignored by Git and persists after browser refresh.
+- [ ] Python tests and React build executed with results recorded.
+- [ ] App and docs explicitly state lack of secure authentication.
