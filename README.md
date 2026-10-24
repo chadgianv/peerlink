@@ -91,3 +91,6 @@ When a preferred schedule is selected, recommendations **exclude** tutors or gro
 ## Functional Study Group Finder (proposed PR)
 
 Search with **Find a Study Group** and request membership in an available fictional group. The group's demo host reviews a pending request, accepts or declines, and the learner sees the updated status after signing back in. Host accounts: Math Study Circle → `joshua`, Algebra Buddies → `angela`, English Review Club → `sofia`, Science Study Buddies → `daniel`, Panitikan Circle → `carlo`. Full Equation Explorers stays unavailable. Accepted membership increases the group's locally stored seat usage; the backend prevents approval beyond capacity. Use **Refresh group requests** after switching accounts. SQLite is local only; no actual class groups, chats, authentication, or notifications exist.
+
+### Study group recommendation membership indicators (review branch)
+Recommended groups show **Already a member** and a disabled button when the signed-in fictional account has an accepted join request. Pending join requests likewise show **Request pending** and disable repeat submission. Group recommendation results are annotated by the backend for the selected demo account; group hosts cannot join their own groups. Re-search after the host accepts to see the updated status.
