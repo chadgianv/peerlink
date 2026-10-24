@@ -45,3 +45,5 @@ Availability is the largest scoring component, **50 of 100 points** in both find
 
 ## Closing (~15 seconds)
 “PEERLINK shows an explainable starting point for finding learning support: compatible timing, suitable peers, requests, approval, and group visibility—all demonstrated with fictional accounts.”
+
+**Any time demonstration:** As Alex, choose Any time, search eligible mathematics tutors and send a request to Joshua. Switch to Joshua to accept; when Alex returns, the request reads **Schedule: flexible, to be arranged together** rather than inventing a confirmed time. Specific time selections still require tutor availability.
