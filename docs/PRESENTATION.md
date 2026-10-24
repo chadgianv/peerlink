@@ -1,14 +1,14 @@
-# PEERLINK Lite — Seminar presentation outline
+# PEERLINK Lite — Presentation outline (Phase 3)
 
 1. **Title:** PEERLINK Lite — Learn Better, Together.
-2. **Problem:** Students need peers who share subject strengths, learning needs and availability.
-3. **Solution:** Two student learning modes — **Find a Peer Tutor** and **Find a Study Group**.
-4. **Student journey:** Select mode → enter grade/subject/topic/time → view recommendations → simulated request.
-5. **Technology:** React/Vite frontend, Python/FastAPI backend, fictional in-memory profiles.
-6. **Matching rules:** Tutor: eligibility plus subject 40, topic 30, time 20, grade 10; group: subject/open seats required, topic 50, schedule 30, capacity 20.
-7. **Demonstration:** Show both finder mode forms. After Phases 2–3, demonstrate API-backed results.
-8. **Three-hour plan:** Phase 0 15m; Phase 1 40m; Phase 2 45m; Phase 3 40m; Phase 4 25m; Phase 5 15m.
-9. **Limits and future:** No real records, qualifications, group membership, or bookings. Future teacher verification and privacy protection.
-10. **Conclusion:** Helping students learn from and with classmates.
+2. **Problem:** Students need accessible ways to find classmates with compatible academic interests and schedules.
+3. **Solution:** Two modes — peer tutor recommendations and study group recommendations.
+4. **Student journey:** Select a mode, choose subject/topic/time, review matches, click a simulated request.
+5. **Architecture:** React/Vite sends JSON to Python/FastAPI, which ranks fictional sample records.
+6. **Matching algorithm:** tutor eligibility and 40/30/20/10 points; group subject/open seat filter then 50/30/20 points.
+7. **Live demonstration:** Search Mathematics / Quadratic Equations / Wednesday 3 PM in both modes; demonstrate explanations and simulated confirmation.
+8. **Three-hour roadmap:** 15 + 40 + 45 + 40 + 25 + 15 = 180 minutes.
+9. **Limitations and future work:** No real student accounts, persistent sessions, verification, messages, or group joins.
+10. **Conclusion:** Students can discover potential learning partners with a transparent recommendation process.
 
-**Phase 1 status:** Both UI modes and search-detail previews only. Never claim functional tutor/group ranking until Phase 2–3 has been tested.
+**Phase 3 implementation state:** React now calls the Phase 2 matching APIs. Request buttons deliberately create **only a local simulated confirmation**. Runtime demonstration remains subject to local verification.
