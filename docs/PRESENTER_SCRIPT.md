@@ -25,7 +25,7 @@ If API testing fails, show screenshots of verified states only; do not claim a s
 
 ## Five-account demonstration add-on
 
-1. Select Alex Rivera (`alex`) and enter the public demo password `peerlink-demo`.
+1. Select Alex Rivera (`alex`) and click Enter demo without a password (or optionally type the displayed example password `peerlink-demo`).
 2. Show the signed-in name and grade and search for a tutor or group.
 3. Sign out; choose Mia Santos (`mia`) using the same demo password.
 4. Explain that the interface uses the active fictional profile and defaults to a different subject.
