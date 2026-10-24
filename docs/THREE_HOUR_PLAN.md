@@ -137,3 +137,7 @@ The group finder now proposes a local SQLite request workflow: pending group joi
 
 ### Owner-requested group recommendation membership UI
 The matching API may annotate each group recommendation with the current fictional account's accepted or pending membership status. Accepted accounts see **Already a member**, with the join control disabled; pending accounts cannot submit duplicate requests. This is additional post-roadmap scope.
+
+## Additional owner-requested group member directory
+
+An approved group member or group host may view the fictional roster of named approved joiners and the host. Seeded participant counts have no identity mappings and are displayed only as unnamed counts. This is additional post-roadmap scope and not secure access control.

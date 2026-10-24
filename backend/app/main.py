@@ -120,3 +120,11 @@ def decide_group(request_id: int,decision: GroupJoinDecision):
     data,err=group_store.decide(request_id,decision.account_id,decision.status)
     if err: raise HTTPException({"not_found":404,"forbidden":403,"already_decided":409,"full":409}[err],err.replace("_"," "))
     return data
+
+@app.get("/api/groups/{group_id}/members")
+def group_members(group_id: str, account_id: str):
+    result, error = group_store.member_directory(group_id, account_id)
+    if error:
+        raise HTTPException({"unknown_account":422,"not_found":404,"forbidden":403}[error],
+                            "Group members are visible only to accepted members and the group host." if error=="forbidden" else error.replace("_"," "))
+    return result

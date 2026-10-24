@@ -60,3 +60,27 @@ def decide(request_id,account_id,decision):
         db.execute("UPDATE group_requests SET status=? WHERE id=?",(decision,request_id))
         db.commit()
         return {"id":request_id,"status":decision,"group_id":row["group_id"],"learner_id":row["learner_id"]},None
+
+# Only demo hosts and accepted members may inspect the fictional group roster.
+# The catalog's initial member totals have no named accounts; do not invent them.
+DISPLAY_NAMES = {"alex":"Alex Rivera","mia":"Mia Santos","noah":"Noah Cruz","ella":"Ella Garcia","liam":"Liam Reyes",
+ "joshua":"Joshua Reyes","angela":"Angela Cruz","mark":"Mark Santos","sofia":"Sofia Garcia",
+ "patricia":"Patricia Flores","daniel":"Daniel Lim","lea":"Lea Mendoza","carlo":"Carlo Navarro","isabella":"Isabella Aquino"}
+
+def member_directory(group_id,account_id):
+    if account_id not in ALLOWED_ACCOUNTS: return None,"unknown_account"
+    with connect() as db:
+        initialize(db)
+        group=state(db,group_id)
+        if group is None or group_id not in HOSTS: return None,"not_found"
+        host=HOSTS[group_id]
+        accepted=db.execute("SELECT learner_id FROM group_requests WHERE group_id=? AND status='accepted' ORDER BY id",(group_id,)).fetchall()
+        member_ids=[r["learner_id"] for r in accepted]
+        if account_id != host and account_id not in member_ids:
+            return None,"forbidden"
+        members=[{"account_id":host,"name":DISPLAY_NAMES[host],"role":"Host"}]
+        members.extend({"account_id":m,"name":DISPLAY_NAMES.get(m,m),"role":"Member"} for m in member_ids)
+        return {"group_id":group_id,"group_name":group["name"],"subject":group["subject"],
+            "topic":group["topic"],"slot":group["slot"],
+            "members":members,"unnamed_seed_members":group["members"]-len(member_ids),
+            "total_member_count":group["members"],"demo_only":True},None

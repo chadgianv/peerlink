@@ -34,6 +34,18 @@ class GroupTests(unittest.TestCase):
         decide_group(pending["id"],GroupJoinDecision(account_id="joshua",status="accepted"))
         self.assertEqual(next(g for g in groups(query)["matches"] if g["id"]=="g1")["membership_status"],"accepted")
 
+    def test_member_directory_permissions(self):
+        pending=join_group(GroupJoinRequest(account_id="alex",group_id="g1"))
+        with self.assertRaises(HTTPException) as err:
+            group_members("g1","alex")
+        self.assertEqual(err.exception.status_code,403)
+        self.assertEqual(group_members("g1","joshua")["members"][0]["role"],"Host")
+        decide_group(pending["id"],GroupJoinDecision(account_id="joshua",status="accepted"))
+        self.assertIn("alex",[p["account_id"] for p in group_members("g1","alex")["members"]])
+        with self.assertRaises(HTTPException) as err:
+            group_members("g1","mia")
+        self.assertEqual(err.exception.status_code,403)
+
     def test_duplicate_full_and_unauthorized(self):
         pending=join_group(GroupJoinRequest(account_id="alex",group_id="g1"))
         with self.assertRaises(HTTPException):
