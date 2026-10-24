@@ -1,38 +1,39 @@
-# PEERLINK Lite — Presentation outline (Phase 3)
+# PEERLINK Lite — Final Seminar Presentation (Phase 5 Review)
 
-1. **Title:** PEERLINK Lite — Learn Better, Together.
-2. **Problem:** Students need accessible ways to find classmates with compatible academic interests and schedules.
-3. **Solution:** Two modes — peer tutor recommendations and study group recommendations.
-4. **Student journey:** Select a mode, choose subject/topic/time, review matches, click a simulated request.
-5. **Architecture:** React/Vite sends JSON to Python/FastAPI, which ranks fictional sample records.
-6. **Matching algorithm:** tutor eligibility and 40/30/20/10 points; group subject/open seat filter then 50/30/20 points.
-7. **Live demonstration:** Search Mathematics / Quadratic Equations / Wednesday 3 PM in both modes; demonstrate explanations and simulated confirmation.
-8. **Three-hour roadmap:** 15 + 40 + 45 + 40 + 25 + 15 = 180 minutes.
-9. **Limitations and future work:** No real student accounts, persistent sessions, verification, messages, or group joins.
-10. **Conclusion:** Students can discover potential learning partners with a transparent recommendation process.
+**Status:** Speaker-ready outline and demo plan drafted, but build, backend regression tests, live browser testing, and rehearsal are **NOT YET VERIFIED**. No PPTX slide deck is claimed.
 
-**Phase 4 review state:** Local dev proxy and stale health-test correction have been committed; browser/mobile tests still require evidence. Both local servers must run.\n\n**Phase 3 implementation state:** React now calls the Phase 2 matching APIs. Request buttons deliberately create **only a local simulated confirmation**. Runtime demonstration remains subject to local verification.
- 
-## Requested additional demo-account segment (not in original time budget)
+## Slide 1 — PEERLINK: Learn Better, Together
+A fictional senior-high-school peer tutoring and study group finder. **Demo only — not a secure school deployment.**
 
-Show the client-side sign-in selector with five fictional profiles and optional password (example: `peerlink-demo`); enter as Alex, demonstrate tutor matching, sign out, then log in as Mia and show a different profile and initial subject. State clearly that **demo credentials are public and provide no real authentication or data protection**. This feature is an added seminar demonstration, not a production identity system.
+## Slide 2 — The student problem
+Students may know the subject they need help with, but not which peer or study group is both relevant **and available at the same time**.
 
-## Optional two-account functional request demo
+## Slide 3 — Two ways to connect
+**Peer Tutor Finder** recommends eligible fictional tutors. **Study Group Finder** recommends fictional groups with open seats and compatible meeting times. The app supports requests in both journeys.
 
-Alex sends Joshua a request, signs out, Joshua signs in and accepts, then Alex signs in and refreshes to see *accepted*. Local SQLite stores the fictional request; it is not a real appointment or external notification. Sixth fictional login added specifically to demonstrate recipient response.
+## Slide 4 — Fictional accounts and user journey
+Select one of **14** fictional demo profiles; the displayed sample password `peerlink-demo` is optional and does not authenticate anybody.
+Student → select subject/topic/time → get ranked matches → submit pending request → switch to recipient/host account → accept/decline → student sees new status.
 
-### Expanded tutor request follow-through
-Demonstrate Alex choosing **any eligible tutor account**, sign in as that tutor to accept, then return to Alex to show the **Session confirmed in PEERLINK demo** card. Clarify a recurring schedule alone is not a dated calendar event, and real meeting coordination remains outside PEERLINK Lite.
+## Slide 5 — Architecture
+React/Vite frontend → FastAPI endpoints → deterministic matching from fictional catalog. Request decisions and group membership records are stored in local SQLite. Vite proxies `/api` to Python port 8000; React normally serves on port 5173.
 
-## Revised ranking formula (pending review)
-Shared schedule becomes the top priority at 50 points. A selected time is a hard eligibility filter for tutor and group matches; explain why this makes recommendations actionable. Tutor: 50 time, 30 subject, 15 topic, 5 grade. Group: 50 time, 35 topic, 15 open capacity.
+## Slide 6 — Explainable and actionable matching
+**Tutor scores (out of 100):** 50 schedule overlap, 30 subject match, 15 topic fit, 5 same grade. Subject must be eligible; a selected schedule must be available to the tutor.
+**Group scores:** 50 schedule, 35 topic, 15 free-seat bonus. Subject, open capacity and selected time are required.
+Scores are transparent rules, **not AI confidence** or proof of verified academic ability.
 
-## Study group membership demonstration
+## Slide 7 — Live demo: tutor lifecycle
+Sign in as `alex` → tutor finder → Mathematics → Quadratic Equations → Wednesday 3 PM → find Joshua Reyes → **Send tutoring request**. Switch to `joshua` → tutoring inbox → accept → switch back to `alex` → **Refresh requests** → see accepted status, topic, recurring time, and request reference. Meeting location/date and contact are not generated.
 
-Sign in as Alex, find Math Study Circle, and send a join request. Sign out and use group host `joshua` to approve; sign back in as Alex to see accepted membership. Explain that this increases the local group membership counter and available seats are capped.
+## Slide 8 — Live demo: group lifecycle
+Use `alex` → Study Group Finder → Mathematics → Quadratic Equations → Wednesday 3 PM → Math Study Circle → **Request to join group**. Switch to `joshua` (group host) → approve member. Switch to `alex`, refresh group requests and re-search to show **Already a member** with disabled button. Open **View group members** to see named host and accepted joiners. Prefilled unnamed members remain an unnamed count.
 
-Group discovery now distinguishes **Already a member** and **Request pending** using saved demo group-request statuses and disables redundant join buttons.
+## Slide 9 — Scope, evidence, and limits
+Features committed: fictional login switching, tutor request decisions, accepted-session status, availability-first match, group approvals/capacity, member indicators, restricted demo group roster. **No secure authentication, real student data, chat, notifications, real calendar appointments, or live contacting capability.** Backend identity values can be impersonated. Do not publish this app for real students.
+**Testing evidence:** GitHub merges and source commits confirmed. Python test execution, Vite build, API/browser smoke checks, and timed rehearsal are **not verified** at this stage. The original 180-minute plan covers foundational phases; follow-on features are extra scope.
 
-## Group roster demonstration
+## Slide 10 — Conclusion and Q&A
+PEERLINK illustrates **find compatible learning peers → request → accept → view next steps** within a fictional, local demonstration. Future production work: real authentication, consent/privacy safeguards, verified tutor identity, safe messaging, actual scheduling and group communications.
 
-After Joshua approves Alex's join request, sign back in as Alex, open **View group members**, and show the fictional host and approved joining students with their demo usernames. Explain that original seeded group members have no assigned fictional logins and are represented by a count, not fabricated names.
+**Slide deck status:** This is a slide-by-slide Markdown outline, **not** a completed PPTX.
