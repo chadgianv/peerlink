@@ -16,3 +16,7 @@
 ## Requested additional demo-account segment (not in original time budget)
 
 Show the client-side sign-in selector with five fictional profiles and optional password (example: `peerlink-demo`); enter as Alex, demonstrate tutor matching, sign out, then log in as Mia and show a different profile and initial subject. State clearly that **demo credentials are public and provide no real authentication or data protection**. This feature is an added seminar demonstration, not a production identity system.
+
+## Optional two-account functional request demo
+
+Alex sends Joshua a request, signs out, Joshua signs in and accepts, then Alex signs in and refreshes to see *accepted*. Local SQLite stores the fictional request; it is not a real appointment or external notification. Sixth fictional login added specifically to demonstrate recipient response.
