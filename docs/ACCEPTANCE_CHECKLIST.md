@@ -1,5 +1,14 @@
 # PEERLINK Lite — Acceptance checklist
 
+## Phase 4 quality checks
+- [ ] `npm.cmd run build` succeeds from frontend folder
+- [ ] `python -m unittest discover -s tests -v` succeeds from backend folder
+- [ ] When the backend is stopped, a useful connection error appears
+- [ ] With both servers running, default same-origin `/api` proxy gives recommendations
+- [ ] Tutor search for Mathematics and English produce different results
+- [ ] Group search excludes full groups
+- [ ] At 360px and desktop widths the results remain usable
+
 ## Phase 3 integration (verify locally)
 - [ ] Python server runs on port 8000.
 - [ ] React frontend runs on port 5173.

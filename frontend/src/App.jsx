@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || ""; // same-origin /api via Vite dev proxy
 const FALLBACK_SUBJECTS = {Mathematics:["Quadratic Equations","Algebra","Statistics"],English:["Grammar","Essay Writing"],Science:["Biology","Chemistry"],Filipino:["Panitikan","Pagsulat"]};
 const FALLBACK_SLOTS = ["Wednesday 3 PM","Thursday 4 PM","Friday 2 PM","Monday 3 PM"];
 
@@ -12,7 +12,7 @@ async function request(path, body, signal) {
   });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const details = typeof data.detail === "string" ? data.detail : "Please check your selections.";
+    const details = response.status >= 500 ? "Python API unavailable (HTTP " + response.status + "). Verify FastAPI on port 8000." : (typeof data.detail === "string" ? data.detail : "Please check your selections (HTTP " + response.status + ").");
     throw new Error(details);
   }
   return data;
@@ -59,7 +59,7 @@ export default function App() {
       }, controller.signal);
       if (!controller.signal.aborted) {setMatches(result.matches);setSearched(true);}
     } catch (err) {
-      if (err.name !== "AbortError") setError("Unable to load recommendations. Confirm FastAPI is running. " + err.message);
+      if (err.name !== "AbortError") setError("Cannot contact the matching API. Start FastAPI in a second terminal on port 8000, then retry. " + err.message);
     } finally {
       if (activeRequest.current === controller) {setLoading(false);activeRequest.current=null;}
     }
@@ -71,7 +71,7 @@ export default function App() {
   }
 
   return <div className="app">
-    <header className="topbar"><div className="logo">P</div><div><b>PEERLINK Lite</b><small>Learn better, together</small></div><span className="badge">PHASE 3 · DEMO</span></header>
+    <header className="topbar"><div className="logo">P</div><div><b>PEERLINK Lite</b><small>Learn better, together</small></div><span className="badge">PEERLINK · DEMO</span></header>
     <main className="page">
       <section className="hero"><p className="eyebrow">STUDENT-TO-STUDENT LEARNING</p><h1>Find your people.<br/><em>Learn your way.</em></h1><p>Discover a peer tutor or a study group matched to your topic and schedule. All student profiles are fictional.</p></section>
       <div className="columns">

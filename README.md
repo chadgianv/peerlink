@@ -3,9 +3,8 @@
 Seminar-ready **React/Vite + Python/FastAPI** peer tutoring and study group finder prototype.
 
 ## Phase status
-- Phases 0–2: merged into main.
-- Phase 3: integration submitted for review, **not merged** until approved.
-- Phase 4: testing and UI polish (pending).
+- Phases 0–3: merged into main.
+- Phase 4: quality fixes proposed in a review branch; tests not yet executed on the local classroom computer.
 - Phase 5: presentation rehearsal (pending).
 
 ## Run locally (Windows)
@@ -30,6 +29,12 @@ npm.cmd run dev
 Open http://localhost:5173 in a browser.
 
 Using `npm.cmd` avoids the PowerShell `npm.ps1` execution-policy error. Install npm dependencies from `frontend/`, not from the repository root.
+
+## Local API connectivity (Phase 4)
+
+During local development React now sends `/api` requests through the Vite proxy to FastAPI on `http://127.0.0.1:8000`. **Both terminals must run:** backend on port 8000 and frontend on port 5173. Restart `npm.cmd run dev` after updating Vite config. Do not set `VITE_API_URL` in `.env.local` for the default setup; if it is already defined, remove it to use the proxy.
+
+Try `http://127.0.0.1:8000/api/health` first. If the health check fails, start the backend; if it succeeds, reload React and try a tutor search. The Vite proxy only works with the local Vite development server; a production host needs `/api` routing or an explicit backend URL.
 
 ## Demo workflow (Phase 3)
 

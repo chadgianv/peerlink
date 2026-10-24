@@ -6,7 +6,7 @@
 
 **Technology:** “React powers the user interface. FastAPI in Python supplies rankings using fictional records. The browser sends a JSON request and receives ranked matches.”
 
-**Live demo:**
+**Local setup:** Run the FastAPI server on port 8000, then start Vite on port 5173; Vite proxies `/api` requests to Python. Ensure both terminals remain open.\n\n**Live demo:**
 1. Start both local servers (React on port 5173, Python on port 8000).
 2. Select **Find a Peer Tutor** and use the fictional learner Alex Rivera, Grade 11.
 3. Select **Mathematics → Quadratic Equations → Wednesday 3 PM**, then click **Find peer tutors**.
