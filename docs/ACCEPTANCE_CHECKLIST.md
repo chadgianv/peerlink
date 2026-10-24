@@ -17,14 +17,14 @@
 - [ ] Changing the subject resets old matches and topic.
 - [ ] Ranked cards display names, score, match reasons, and time slots or available seats.
 - [ ] Loading, offline API, and no-result states are understandable.
-- [ ] Tutor request shows “SIMULATED” and confirms no booking or notification.
-- [ ] Group join shows “SIMULATED” and confirms no membership was created.
+- [ ] Tutor requests save a local pending state; accepting stores accepted status without creating a real calendar appointment or notification.
+- [ ] Group join requests save pending/accepted/declined fictional membership records; no actual school enrollment or chat is created.
 - [ ] `npm.cmd run build` completes.
 - [ ] Backend unit tests pass.
 - [ ] At least one desktop and one mobile viewport tested.
 
 ## Not implemented
-- Real registration, direct messaging, notifications, group membership, or booking persistence.
+- Real registration, direct messaging, notifications, secure school membership, or real booking/calendar persistence.
 - Teacher verification of actual tutors and secure student identity records.
 
 ## Seminar
@@ -32,8 +32,8 @@
 - [ ] Both finder modes can be demonstrated.
 - [ ] Fictional data is used exclusively.
  
-## Five-account demo login add-on (awaiting owner approval)
-- [ ] Login displays five fictional accounts, and their usernames are documented.
+## Fictional demo login (already merged; verify runtime)
+- [ ] Login offers 14 fictional accounts (five original learners plus nine eligible tutor personas).
 - [ ] Account can enter with the password field blank (one-click demo access).
 - [ ] Shared example password `peerlink-demo` is clearly visible and accepted; no password security is implied.
 - [ ] Profile name, grade and default subject reflect the selected account.
@@ -91,3 +91,20 @@
 - [ ] Pending or unrelated demo account receives 403 when requesting roster.
 - [ ] Newly accepted members appear by fictional name and username; seeded unnamed members are not misrepresented as identified students.
 - [ ] Python tests, frontend build and desktop/mobile live tests are completed and results reported.
+
+## Phase 5 seminar readiness — evidence ledger
+
+| Check | Status | Evidence / next action |
+|---|---|---|
+| PR #11 merged into main | VERIFIED | GitHub merge commit `5b8ad9e05129a8579876964a6ebaaf34cfde04d0` |
+| Current features summarized accurately in slides/script | DOCUMENTED | Review `docs/PRESENTATION.md` and `docs/PRESENTER_SCRIPT.md` |
+| Backend Python unit suite | NOT RUN | Run `python -m unittest discover -s tests -v` from `backend/` |
+| Frontend production build | NOT RUN | Run `npm.cmd run build` from `frontend/` |
+| Live FastAPI / Vite health and matching | NOT RUN | Start both servers; check `/api/health`, both finder modes |
+| Tutor request lifecycle in two demo accounts | NOT RUN | Alex → Joshua → Alex; verify accepted status |
+| Group join / member list lifecycle | NOT RUN | Alex → Joshua host → Alex; verify badge and member directory |
+| Desktop and 360px layout / projector readability | NOT RUN | Browser viewport smoke test |
+| 2-minute timed demo rehearsal / fallback captured | NOT RUN | Rehearse, time, and record actual results |
+| PPTX slide deck produced | NOT PROVIDED | This project currently has a Markdown outline only |
+
+**Important:** The historical checkboxes above are not proof of execution; leave them unchecked until supported by actual output. Do not assume correctness from merged commits alone.
