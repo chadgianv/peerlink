@@ -1,9 +1,9 @@
 # PEERLINK Lite — Three-Hour Development Roadmap
 
 ## Goal
-Build a **seminar-ready student-to-student tutor matching prototype** for Senior High School students in **180 minutes**, using **ReactJS (Vite)** and **Python (FastAPI)**.
+Build a **seminar-ready student-to-student tutor and study group matching prototype** for Senior High School students in **180 minutes**, using **ReactJS (Vite)** and **Python (FastAPI)**.
 
-**Demonstration flow:** Learner selects a subject, topic, grade, and preferred tutoring time → Python ranks fictional eligible peer tutors → learner reviews match reasons → learner submits a clearly **simulated** session request.
+**Demonstration flow:** Learner selects Peer Tutor Finder or Study Group Finder, plus subject, topic, grade and time → Python ranks eligible fictional tutors or groups → simulated request.
 
 **Scope:** A demo, not a production school system. All tutor names, qualifications, and schedules are fictional. No real appointments or student notifications are created.
 
@@ -19,14 +19,18 @@ Build a **seminar-ready student-to-student tutor matching prototype** for Senior
 | Phase | Elapsed time | Duration | Deliverable | Acceptance criteria |
 |---|---|---:|---|---|
 | **0. Setup** | 00:00–00:15 | **15 min** | React and FastAPI projects | Both servers run; `GET /api/health` returns OK |
-| **1. Student interface** | 00:15–00:55 | **40 min** | Responsive learner form, recommendation cards | Choose name, grade, subject, topic, preferred time |
-| **2. Matching engine** | 00:55–01:40 | **45 min** | Fictional tutor catalog and `POST /api/match` | Only eligible subject-matched tutors returned, highest scores first |
-| **3. Integration** | 01:40–02:20 | **40 min** | React makes API calls; demo request | Dynamic recommendations; simulated request acknowledgment |
+| **1. Student interface** | 00:15–00:55 | **40 min** | Two-mode responsive form and result placeholders | Choose name, grade, subject, topic, preferred time |
+| **2. Matching engine** | 00:55–01:40 | **45 min** | Tutor/group catalogs and matching API endpoints | Only eligible tutors and available groups returned, ranked |
+| **3. Integration** | 01:40–02:20 | **40 min** | React integrates both modes and demo requests | Dynamic recommendations; simulated request acknowledgment |
 | **4. Quality check** | 02:20–02:45 | **25 min** | Error states, testing, UI polish | Switching subjects changes matches; works on laptop/projector |
 | **5. Presentation** | 02:45–03:00 | **15 min** | Final slide review and demonstration rehearsal | Complete end-to-end demo in ~2 minutes |
 | **TOTAL** | **00:00–03:00** | **180 min** | **Seminar prototype** | |
 
 These are aggressive targets assuming Python and Node.js are installed and the team uses prepared sample data.
+
+## Approved Study Group Finder addition
+
+Group Finder selects only groups with a matching subject and open capacity, then uses topic fit (50 points), schedule fit (30 points), and available seats (20 points) for ranking. The three-hour prototype demonstrates discovery and simulated join requests; actual group creation, membership persistence, and live chats are out of scope. Phase 1 builds both interface modes; Phases 2–3 implement and integrate the matching logic. **Total time remains 180 minutes.**
 
 ## Core matching rules
 
@@ -93,6 +97,9 @@ These points are a **ranking heuristic**, not an AI prediction, statistical prob
 - **Presentation:** Slides, speaker roles, rehearsal, fallback screenshots
 
 ## Completion checklist
+- [ ] Two modes: Peer Tutor Finder and Study Group Finder
+- [ ] Simulated join requests are clearly labeled
+
 - [ ] React frontend opens locally
 - [ ] FastAPI health endpoint responds
 - [ ] Mathematics yields fictional Mathematics tutors
