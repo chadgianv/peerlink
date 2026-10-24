@@ -87,3 +87,7 @@ Both accounts can open **My tutoring requests & tutor inbox** and see the accept
 ## Availability-first rankings (proposed PR)
 
 When a preferred schedule is selected, recommendations **exclude** tutors or groups that do not meet at that time. Tutor score: **50 shared schedule + 30 matching subject (required) + 15 topic + 5 same grade**. Group score: **50 schedule + 35 topic + 15 available capacity**, with subject and open seats mandatory. Use **Any time** to explore options, then select a shared slot before sending a tutoring request. This prevents showing a high-ranked tutor who cannot meet at the learner's chosen time.
+
+## Functional Study Group Finder (proposed PR)
+
+Search with **Find a Study Group** and request membership in an available fictional group. The group's demo host reviews a pending request, accepts or declines, and the learner sees the updated status after signing back in. Host accounts: Math Study Circle → `joshua`, Algebra Buddies → `angela`, English Review Club → `sofia`, Science Study Buddies → `daniel`, Panitikan Circle → `carlo`. Full Equation Explorers stays unavailable. Accepted membership increases the group's locally stored seat usage; the backend prevents approval beyond capacity. Use **Refresh group requests** after switching accounts. SQLite is local only; no actual class groups, chats, authentication, or notifications exist.
