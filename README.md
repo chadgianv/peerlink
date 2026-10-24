@@ -94,3 +94,7 @@ Search with **Find a Study Group** and request membership in an available fictio
 
 ### Study group recommendation membership indicators (review branch)
 Recommended groups show **Already a member** and a disabled button when the signed-in fictional account has an accepted join request. Pending join requests likewise show **Request pending** and disable repeat submission. Group recommendation results are annotated by the backend for the selected demo account; group hosts cannot join their own groups. Re-search after the host accepts to see the updated status.
+
+## Group member directory (pending review)
+
+After the group host approves a join request, the accepted member can click **View group members** from the accepted request card. The host and approved joiners can also open **View members** from group recommendations. The directory lists the host and accepted joiners by fictional name and demo username, plus the group's subject, topic, and recurring schedule. Original placeholder members have only seeded counts, not linked accounts; they appear as an unnamed count rather than invented names. Endpoint: `GET /api/groups/{group_id}/members?account_id=...`; unapproved accounts receive HTTP 403. **Demo account IDs are unauthenticated and may be impersonated; never put real student contact information into this prototype.** No chat or private contact details.
