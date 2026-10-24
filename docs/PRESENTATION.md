@@ -11,4 +11,4 @@
 9. **Limitations and future work:** No real student accounts, persistent sessions, verification, messages, or group joins.
 10. **Conclusion:** Students can discover potential learning partners with a transparent recommendation process.
 
-**Phase 3 implementation state:** React now calls the Phase 2 matching APIs. Request buttons deliberately create **only a local simulated confirmation**. Runtime demonstration remains subject to local verification.
+**Phase 4 review state:** Local dev proxy and stale health-test correction have been committed; browser/mobile tests still require evidence. Both local servers must run.\n\n**Phase 3 implementation state:** React now calls the Phase 2 matching APIs. Request buttons deliberately create **only a local simulated confirmation**. Runtime demonstration remains subject to local verification.
