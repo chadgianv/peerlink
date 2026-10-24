@@ -37,3 +37,5 @@ Features committed: fictional login switching, tutor request decisions, accepted
 PEERLINK illustrates **find compatible learning peers → request → accept → view next steps** within a fictional, local demonstration. Future production work: real authentication, consent/privacy safeguards, verified tutor identity, safe messaging, actual scheduling and group communications.
 
 **Slide deck status:** This is a slide-by-slide Markdown outline, **not** a completed PPTX.
+
+**Flexible time detail:** Selecting Any time means no schedule constraint; eligible tutor recommendations can receive requests. An accepted request with no slot is not a scheduled meeting; the two fictional students must agree on a time later.

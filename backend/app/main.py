@@ -56,7 +56,7 @@ class TutoringRequest(BaseModel):
     tutor_id: str = Field(min_length=2,max_length=10)
     subject: Literal["Mathematics","English","Science","Filipino"]
     topic: str = Field(default="",max_length=80)
-    preferred_slot: str = Field(min_length=1,max_length=50)
+    preferred_slot: str = Field(default="",max_length=50)
 
 class TutorDecision(BaseModel):
     account_id: str
@@ -73,8 +73,8 @@ def submit_tutoring(req: TutoringRequest):
         raise HTTPException(422,"Cannot request tutoring from yourself.")
     if req.topic and req.topic not in TOPICS[req.subject]:
         raise HTTPException(422,"Invalid topic.")
-    if req.preferred_slot not in tutor["slots"]:
-        raise HTTPException(422,"Choose an available tutor schedule.")
+    if req.preferred_slot and req.preferred_slot not in tutor["slots"]:
+        raise HTTPException(422,"Choose an available tutor schedule or Any time.")
     return requests_store.create(req.learner_id,req.tutor_id,req.subject,req.topic,req.preferred_slot)
 
 @app.get("/api/requests")

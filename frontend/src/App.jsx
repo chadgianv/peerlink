@@ -83,7 +83,7 @@ export default function App({account, onSignOut}) {
     }
   }
   async function submitTutor(item) {
-    if(!time || !item.slots.includes(time)){setConfirmation("Choose a schedule offered by "+item.name+" before sending the request.");return;}
+    if(time && !item.slots.includes(time)){setConfirmation("Choose a schedule offered by "+item.name+" or select Any time.");return;}
     setBusyRequest(true);setRequestError("");
     try {const result=await request("/api/requests",{learner_id:account.id,tutor_id:item.id,subject,topic,preferred_slot:time});setConfirmation("Request #"+result.id+" sent to "+item.name+". Status: pending. Sign out and sign in as @"+item.account_id+" to respond.");await loadRequests();}
     catch(e){setRequestError("Could not submit tutoring request: "+e.message);}
@@ -167,9 +167,9 @@ export default function App({account, onSignOut}) {
         <div className="requests-header"><div><p className="eyebrow">STEP 03 · TUTORING REQUESTS</p><h2>{"My tutoring requests & tutor inbox"}</h2></div><button type="button" className="request-button" onClick={loadRequests}>Refresh requests</button></div>
         {requests.length===0?<p className="result-count">No tutoring requests yet. Find a tutor and send a request, then enter their demo account to respond.</p>:
           <div className="match-list">{requests.map(item=><article className="match-card" key={item.id}>
-            <div className="match-heading"><div><b>Request #{item.id} · {item.subject}</b><small>{item.topic||"Any topic"} · {item.slot}</small></div><strong className="score">{item.status}</strong></div>
+            <div className="match-heading"><div><b>Request #{item.id} · {item.subject}</b><small>{item.topic||"Any topic"} · {item.slot||"Any time — to be arranged"}</small></div><strong className="score">{item.status}</strong></div>
             <p className="match-meta">From @{item.learner_id} to @{({t1:"joshua",t2:"angela",t3:"mark",t4:"sofia",t5:"patricia",t6:"daniel",t7:"lea",t8:"carlo",t9:"isabella"})[item.tutor_id]} · {item.created_at} UTC</p>
-            {item.status==="accepted" && <div className="accepted-session"><strong>Session confirmed in PEERLINK demo</strong><p>Topic: {item.subject} — {item.topic||"General review"}</p><p>Agreed schedule: {item.slot}</p><p>Next step: both students should coordinate their meeting place outside this prototype. This is not a calendar booking or notification.</p><small>Reference: Tutoring request #{item.id} · Accepted</small></div>}
+            {item.status==="accepted" && <div className="accepted-session"><strong>Tutoring request accepted in PEERLINK demo</strong><p>Topic: {item.subject} — {item.topic||"General review"}</p><p>{item.slot?"Requested schedule: "+item.slot:"Schedule: flexible, to be arranged together"}</p><p>Next step: both students should coordinate their meeting place outside this prototype. This is not a calendar booking or notification.</p><small>Reference: Tutoring request #{item.id} · Accepted</small></div>}
             {item.status==="declined" && <div className="notice error">The tutor declined this request. Please search for another available tutor.</div>}
             {({t1:"joshua",t2:"angela",t3:"mark",t4:"sofia",t5:"patricia",t6:"daniel",t7:"lea",t8:"carlo",t9:"isabella"})[item.tutor_id]===account.id && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"accepted")}>Accept request</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"declined")}>Decline request</button></div>}
           </article>)}</div>}

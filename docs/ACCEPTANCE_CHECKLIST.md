@@ -108,3 +108,9 @@
 | PPTX slide deck produced | NOT PROVIDED | This project currently has a Markdown outline only |
 
 **Important:** The historical checkboxes above are not proof of execution; leave them unchecked until supported by actual output. Do not assume correctness from merged commits alone.
+
+## Flexible tutoring requests
+- [ ] Any time allows tutoring requests without a selected slot.
+- [ ] Tutor may accept, and the schedule remains to be arranged.
+- [ ] Specific unavailable slots remain rejected.
+- [ ] Backend tests, frontend build and browser checks run and recorded.
