@@ -83,3 +83,7 @@ Every eligible recommended tutor now has a corresponding fictional sign-in accou
 ### After the tutor accepts
 
 Both accounts can open **My tutoring requests & tutor inbox** and see the accepted status, subject/topic, agreed recurring time slot and session reference. The UI calls this a **demo session confirmation**. The participants must arrange a physical or online meeting separately; the app does not yet generate meeting links, calendar dates, notifications, or actual appointments. A declined request instead prompts the student to search again.
+
+## Availability-first rankings (proposed PR)
+
+When a preferred schedule is selected, recommendations **exclude** tutors or groups that do not meet at that time. Tutor score: **50 shared schedule + 30 matching subject (required) + 15 topic + 5 same grade**. Group score: **50 schedule + 35 topic + 15 available capacity**, with subject and open seats mandatory. Use **Any time** to explore options, then select a shared slot before sending a tutoring request. This prevents showing a high-ranked tutor who cannot meet at the learner's chosen time.
