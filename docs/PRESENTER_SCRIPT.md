@@ -38,3 +38,6 @@ If API testing fails, show screenshots of verified states only; do not claim a s
 3. Sign out, enter `joshua`, scroll to **Incoming requests**, then choose **Accept request**.
 4. Sign out, enter `alex`, and click **Refresh requests**; explain accepted status.
 5. Note this is **fictional local SQLite persistence**, with public demo identities and no real notifications, secure login, or appointment enforcement.
+
+### After request acceptance
+Show the accepted card to both tutor and learner: session reference, matched topic, agreed time slot, and reminder to coordinate meeting location separately. Every eligible recommended tutor now has a matching account; switch to the appropriate username rather than only Joshua.
