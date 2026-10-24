@@ -31,6 +31,9 @@ export default function App({account, onSignOut}) {
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState("");
   const [confirmation,setConfirmation] = useState("");
+  const [requests,setRequests] = useState([]);
+  const [requestError,setRequestError] = useState("");
+  const [busyRequest,setBusyRequest] = useState(false);
   const activeRequest = useRef(null);
 
   useEffect(() => {
@@ -41,6 +44,11 @@ export default function App({account, onSignOut}) {
     return () => controller.abort();
   }, []);
 
+  async function loadRequests() {
+    try {const res=await request("/api/requests?account_id="+encodeURIComponent(account.id),null);setRequests(res.requests);setRequestError("");}
+    catch(e){setRequestError("Could not load demo requests. Ensure FastAPI is running. "+e.message);}
+  }
+  useEffect(()=>{loadRequests();},[account.id]);
   function reset() {
     if (activeRequest.current) activeRequest.current.abort();
     setMatches([]);setSearched(false);setLoading(false);setError("");setConfirmation("");
@@ -63,6 +71,22 @@ export default function App({account, onSignOut}) {
     } finally {
       if (activeRequest.current === controller) {setLoading(false);activeRequest.current=null;}
     }
+  }
+  async function submitTutor(item) {
+    if(item.id!=="t1"){setConfirmation("To demonstrate a two-account request, select Joshua Reyes. The other tutors are matching-only fictional profiles.");return;}
+    if(!time || !item.slots.includes(time)){setConfirmation("Choose a schedule offered by Joshua before submitting a real demo request.");return;}
+    setBusyRequest(true);setRequestError("");
+    try {const result=await request("/api/requests",{learner_id:account.id,tutor_id:item.id,subject,topic,preferred_slot:time});setConfirmation("Request #"+result.id+" sent to Joshua Reyes. Status: pending. Sign out and enter Joshua’s account to respond.");await loadRequests();}
+    catch(e){setRequestError("Could not submit tutoring request: "+e.message);}
+    finally{setBusyRequest(false);}
+  }
+  async function decideTutor(item,status) {
+    setBusyRequest(true);setRequestError("");
+    try {const response=await fetch(API+"/api/requests/"+item.id,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({account_id:account.id,status})});
+      if(!response.ok)throw new Error("HTTP "+response.status);
+      await loadRequests();setConfirmation("Request #"+item.id+" "+status+". The learner can view this updated status.");}
+    catch(e){setRequestError("Could not respond: "+e.message);}
+    finally{setBusyRequest(false);}
   }
   function simulate(item) {
     setConfirmation(mode === "tutor" ?
@@ -98,6 +122,7 @@ export default function App({account, onSignOut}) {
         <section className="panel results" aria-live="polite" aria-busy={loading}>
           <p className="eyebrow">STEP 02 · RECOMMENDATIONS</p><h2>{mode==="tutor"?"Peer Tutor Finder":"Study Group Finder"}</h2>
           {error && <div className="notice error" role="alert">{error}</div>}
+          {requestError && <div className="notice error" role="alert">{requestError}</div>}
           {confirmation && <div className="notice success" role="status">{confirmation}</div>}
           {loading && <div className="empty"><span>⏳</span><h3>Finding matches...</h3></div>}
           {!loading && !searched && <div className="empty"><span>✦</span><h3>Learning starts with a connection.</h3><p>Choose a subject and search for fictional matches from the Python backend.</p></div>}
@@ -109,12 +134,22 @@ export default function App({account, onSignOut}) {
               {index===0 && <span className="topmatch">Top match</span>}
               <p className="match-meta">{mode==="tutor"?"Topics: "+item.topics.join(", ")+" · Times: "+item.slots.join(", "):"Topic: "+item.topic+" · Time: "+item.slot+" · Members: "+item.members+"/"+item.capacity}</p>
               <div className="reasons">{item.reasons.map((reason,i)=><span key={i}>{reason}</span>)}</div>
-              <button type="button" className="request-button" onClick={()=>simulate(item)}>{mode==="tutor"?"Request tutoring (demo)":"Join group (demo)"}</button>
+              <button type="button" className="request-button" onClick={()=>mode==="tutor"?submitTutor(item):simulate(item)} disabled={busyRequest}>{mode==="tutor"?(item.id==="t1"?"Send tutoring request":"Tutor demo only"):"Join group (demo)"}</button>
             </article>)}
           </div>}
-          <p className="disclaimer">Rankings are rule-based points, not verified ability or AI confidence. Requests are simulated only.</p>
+          <p className="disclaimer">Rankings are rule-based. Joshua tutoring requests are saved locally; study-group joins remain simulated. Demo identities are not authenticated.</p>
         </section>
       </div>
+      <section className="panel requests-panel" aria-live="polite">
+        <div className="requests-header"><div><p className="eyebrow">STEP 03 · TUTORING REQUESTS</p><h2>{account.id==="joshua"?"Joshua's incoming requests":"My tutoring requests"}</h2></div><button type="button" className="request-button" onClick={loadRequests}>Refresh requests</button></div>
+        {requests.length===0?<p className="result-count">No tutoring requests yet. Alex can request Joshua above; sign in as Joshua to accept or decline.</p>:
+          <div className="match-list">{requests.map(item=><article className="match-card" key={item.id}>
+            <div className="match-heading"><div><b>Request #{item.id} · {item.subject}</b><small>{item.topic||"Any topic"} · {item.slot}</small></div><strong className="score">{item.status}</strong></div>
+            <p className="match-meta">From {item.learner_id} to Joshua Reyes · {item.created_at} UTC</p>
+            {account.id==="joshua" && item.status==="pending" && <div className="request-actions"><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"accepted")}>Accept request</button><button type="button" disabled={busyRequest} className="request-button" onClick={()=>decideTutor(item,"declined")}>Decline request</button></div>}
+          </article>)}</div>}
+        <p className="disclaimer">Requests are kept only in this local FastAPI demo database. No emails, notifications or real appointments are sent.</p>
+      </section>
     </main><footer>PEERLINK Lite · React + Python FastAPI · Seminar prototype</footer>
   </div>;
 }
