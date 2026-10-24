@@ -30,3 +30,5 @@ Shared schedule becomes the top priority at 50 points. A selected time is a hard
 ## Study group membership demonstration
 
 Sign in as Alex, find Math Study Circle, and send a join request. Sign out and use group host `joshua` to approve; sign back in as Alex to see accepted membership. Explain that this increases the local group membership counter and available seats are capped.
+
+Group discovery now distinguishes **Already a member** and **Request pending** using saved demo group-request statuses and disables redundant join buttons.
